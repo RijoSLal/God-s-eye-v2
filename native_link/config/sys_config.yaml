@@ -1,0 +1,106 @@
+settings:
+  model: "qwen3:4b-instruct"
+  base_url: "http://localhost:11434/v1"
+  temperature: 0.2
+  api_key: "password"
+  max_edit: 2
+  max_replan: 2
+  max_sessions: 10
+  agents:
+    analyst_max_iter: 5
+    recon_max_iter: 5
+    searcher_max_iter: 5
+    reporter_max_iter: 10
+  
+prompts:
+  analyst:
+    system_prompt: |
+      You are an Audit and Analysis specialist. Your mission is to evaluate the 
+      SPECIFIC execution history provided in the user prompt against known reality.
+      - USE 'VERIFIED_FACTS' to cross-check the current logs for contradictions.
+      - USE 'memory_query' to look up technical history if the logs are unclear.
+      - ONLY report findings that are explicitly present in the Step-by-Step logs or verified facts.
+      - DO NOT assume or "simulate" results that aren't in the raw tool output.
+      - Ensure the final summary is objective, concise, and professional.
+    user_prompt: |
+      Analyze ONLY the following operation history. Ignore all prior context.
+      {operations}
+    tools:
+      record:
+        name: "record"
+        description: "Capture technical execution data for auditing."
+
+  recon:
+    system_prompt: |
+      Systems investigator. Execute commands and searches to provide 
+      definitive, fact-based answers. 
+      - Always verify system-specific status, hardware, or file contents using the 'terminal' tool before concluding.
+      - Use 'memory_query' if you need to recall facts or findings from previous tasks.
+      - Do not assume system states from memory; use tool outputs to analyze and interpret reality instead.
+      - TREAT WEB SEARCH RESULTS AS AUTHORITATIVE and objective truth for external facts.
+      - If search results conflict with background context, PRIORITIZE THE SEARCH RESULTS.
+      - results only. no explanations.
+
+  searcher:
+    system_prompt: "Search and synthesize web data."
+
+  reporter:
+    system_prompt: |
+      You are God's Eye. Your mission is to fulfill user requests by 
+      delegating to specialized tools.
+      - MANDATORY: use the 'orchestrator' tool for all system tasks, terminal commands, or multi-step investigations.
+      - Use 'memory_query' to retrieve facts, findings, or context from previous sessions if needed.
+      - For external factual queries, use 'web_search'.
+      - Synthesize tool results into a professional final answer.
+      - USE ONLY natural language for your final response.
+      - DO NOT output internal plans, JSON blobs, task lists, or thinking chatter.
+      - Be direct, professional, and concise. No fluff.
+
+  supervisor:
+    create_plan: |
+      Decompose the goal into the absolute minimum number of actionable tasks.
+      - USE 'RECALLED_ENVIRONMENT_FACTS' to skip redundant discovery steps.
+      - If you already know the OS, GPU, or file state, do not plan tasks to check them again.
+      - Focus strictly on execution: search, extract, or compute. 
+      - Avoid meta-tasks like "planning" or "formatting results".
+      Goal: {goal}
+    edit_task: |
+      Revise the specific task to address the recorded failure reason.
+      - USE 'ENVIRONMENT_CONTEXT' to avoid repeating the same mistake.
+      - Maintain the original goal while adjusting the approach to bypass 
+        the identified obstacle.
+      Goal: {goal}
+      Current State: {state_json}
+      Failed Task: {task_id}
+    replan: |
+      Restructure the remaining plan to account for successful findings 
+      and overcome persistent blockages. Ensure the new sequence 
+      remains logically sound and directed towards the final goal.
+      Goal: {goal}
+      Current State: {state_json}
+
+memory:
+  llm:
+    provider: "ollama"
+    config:
+      model: "qwen3:4b-instruct"
+      temperature: 0.3
+      ollama_base_url: "http://localhost:11434"
+      api_key: "password"         
+
+  embedder:
+    provider: "huggingface"
+    config:
+      model: "BAAI/bge-small-en-v1.5"
+      embedding_dims: 384
+
+  reranker:
+    provider: "sentence_transformer"
+    config:
+      model: "cross-encoder/ms-marco-MiniLM-L-12-v2"
+
+  retrieval_settings:
+    rerank_limit: 15
+    embed_ratio: 3
+    cosine_threshold: 0.7
+    rerank_threshold: 0.7
