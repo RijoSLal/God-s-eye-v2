@@ -1,0 +1,15 @@
+httpx
+langchain
+langchain-core
+langchain-mcp-adapters
+langchain-openai
+mem0ai
+nvidia-ml-py
+orjson
+psutil
+pydantic
+pyyaml
+qdrant-client
+rich
+sentence-transformers
+textual

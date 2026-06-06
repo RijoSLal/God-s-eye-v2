@@ -1,0 +1,24 @@
+2026-06-05 20:06:46,120 | INFO | gods_eye | configuration synchronized from mcp_config.yaml
+2026-06-05 20:06:46,123 | INFO | gods_eye | initializing mcp helpers: recon and searcher
+2026-06-05 20:07:59,418 | INFO | gods_eye | ping request received
+2026-06-05 20:24:06,691 | INFO | gods_eye | ping request received
+2026-06-05 20:24:36,916 | INFO | gods_eye | ping request received
+2026-06-05 20:24:52,558 | INFO | gods_eye | executing remote: rtk ip addr show
+2026-06-05 20:25:21,408 | INFO | gods_eye | executing remote: rtk netstat -tulnp | grep -E 'ESTABLISHED|LISTEN'
+2026-06-05 20:37:53,169 | INFO | gods_eye | ping request received
+2026-06-05 20:41:32,414 | INFO | gods_eye | executing remote: rtk netstat -tulnp
+2026-06-05 20:42:23,907 | INFO | gods_eye | executing remote: rtk ip addr show
+2026-06-05 20:42:33,436 | INFO | gods_eye | executing remote: rtk ss -tuln
+2026-06-05 20:51:09,411 | INFO | gods_eye | configuration synchronized from mcp_config.yaml
+2026-06-05 20:51:09,414 | INFO | gods_eye | initializing mcp helpers: recon and searcher
+2026-06-05 20:51:10,617 | INFO | gods_eye | ping request received
+2026-06-05 20:53:19,277 | INFO | gods_eye | ping request received
+2026-06-05 20:54:04,768 | INFO | gods_eye | ping request received
+2026-06-05 20:54:24,468 | INFO | gods_eye | executing remote: rtk ip addr show
+2026-06-05 20:54:51,520 | INFO | gods_eye | executing remote: rtk ss -tuln
+2026-06-05 20:55:18,257 | INFO | gods_eye | executing remote: rtk netstat -s
+2026-06-05 20:56:30,177 | INFO | gods_eye | executing remote: rtk ss -tuln
+2026-06-05 20:57:05,683 | INFO | gods_eye | executing remote: rtk uname -a
+2026-06-05 20:57:56,612 | INFO | gods_eye | executing remote: rtk ip addr show
+2026-06-05 20:57:56,619 | INFO | gods_eye | executing remote: rtk ss -tuln
+2026-06-05 21:27:47,568 | INFO | gods_eye | ping request received

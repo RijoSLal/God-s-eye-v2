@@ -1,11 +1,24 @@
-FROM python:3.15.0b1-alpine3.23 
+FROM python:3.12-slim
 
-WORKDIR /code 
+WORKDIR /code
 
-COPY ./requirements.txt   /code/requirements.txt
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    curl \
+    git \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt 
+COPY ./requirements.txt /code/requirements.txt
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
-COPY ./server   /code/server
+RUN playwright install --with-deps chromium
 
-CMD ["python3", "-m", "mcp_server"]
+COPY ./server /code/server
+
+ENV PYTHONPATH=/code/server:/code
+
+EXPOSE 8000
+
+WORKDIR /code/server
+
+CMD ["uvicorn", "mcp_server:streamable_http_app", "--host", "0.0.0.0", "--port", "8000"]

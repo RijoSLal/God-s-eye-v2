@@ -1,3 +1,58 @@
 services:
-      server:
-          build: model_link
+    server:
+        build:
+            context: ./model_link
+            dockerfile: Dockerfile 
+        container_name: mcp_server
+        ports:
+          - "8000:8000"
+        volumes:
+            - ./config:/code/server/config
+            - ./model_link/server:/code/server
+            - ./logs/mcp_server:/var/log/mcp_server
+        depends_on:
+          - searxng
+
+    terminal:
+        build:
+            context: ./native_link
+            dockerfile: Dockerfile
+        container_name: tui_client
+        volumes:
+            - ./config:/code/client/config
+            - ./native_link/client:/code/client
+            - ./logs/tui_client:/var/log/tui_client
+        environment:
+            - CUDA_VISIBLE_DEVICES=
+        depends_on:
+          - server
+          - qdrant
+        stdin_open: true
+        tty: true
+        deploy:
+          resources:
+            reservations:
+              devices:
+                - driver: nvidia
+                  count: all
+                  capabilities: [gpu]
+
+    searxng:
+        image: searxng/searxng:latest
+        container_name: searxng
+        ports:
+           - "8888:8080"
+        volumes:
+           - ./searxng:/etc/searxng
+           - ./logs/searxng:/var/log/searxng
+        environment:
+           - BASE_URL=http://localhost:8888/
+
+    qdrant:
+        image: qdrant/qdrant:latest
+        container_name: qdrant
+        ports:
+        - "6334:6334"
+        volumes:
+        - ./qdrant_storage:/qdrant/storage:z 
+        - ./logs/qdrant:/qdrant/logs

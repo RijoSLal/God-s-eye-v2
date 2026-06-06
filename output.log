@@ -1,3 +1,0 @@
-2026-06-04 13:57:06,191 | INFO | workflow | initializing shared mcp client
-2026-06-04 13:57:06,191 | INFO | workflow | initializing shared memory layer
-Collection 'mem0' predates v3 hybrid search (no 'bm25' sparse slot). BM25 keyword scoring will be disabled for this collection; semantic search works normally. To enable hybrid search, use a fresh collection.

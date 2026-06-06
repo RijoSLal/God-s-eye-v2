@@ -270,8 +270,6 @@ class Searcher:
         return result
          
 
-
-
 class Recon:
     """
     provides tools for terminal execution and remote connectivity verification.
