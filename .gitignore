@@ -1,3 +1,6 @@
 container
 __pycache__
 todo.txt
+config/kali_instance.pem
+config/.env
+qdrant_storage/*

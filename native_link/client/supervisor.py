@@ -1,9 +1,10 @@
 from langchain_openai import ChatOpenAI
 from langchain.agents import create_agent
+from langchain.agents.middleware import dynamic_prompt
 from langchain_core.tools import StructuredTool
 from typing import Dict, Optional
 import asyncio
-from structure import Task, PlanState, CreatePlanOutput, EditTaskOutput, ReplanOutput, Nuance, AnalystReport, SupervisorRunSchema, MemoryQuerySchema
+from structure import Task, PlanState, CreatePlanOutput, EditTaskOutput, ReplanOutput, Nuance, AnalystReport, OrchestratorRunSchema, MemoryQuerySchema
 from mcp_client import MCPClient
 from memory import MemoryLayer
 from logs.logging_setup import logger
@@ -152,11 +153,11 @@ class Model:
         return cursor or fallback
 
 
-class Supervisor(Model):
+class Orchestrator(Model):
     # manages high-level planning and task execution
     def __init__(self):
         """
-        initializes the supervisor with structured generation models and recon agent.
+        initializes the orchestrator with structured generation models and recon agent.
 
         returns:
             none
@@ -179,18 +180,23 @@ class Supervisor(Model):
         self.recon = Recon()
         self.current_os = "unknown"
 
-    async def create_plan(self, goal: str) -> Dict[str, Task]:
+    async def create_plan(self, goal: str, facts: str = "") -> Dict[str, Task]:
         """
         creates an initial execution plan for a goal.
 
         args:
             goal (str): the user's high-level goal.
+            facts (str): recalled environment facts.
 
         returns:
             Dict[str, Task]: a mapping of task identifiers to task objects.
         """
         logger.info(f"creating execution plan for goal: {goal[:50]}")
-        prompt = self.fetch_prompt("supervisor.create_plan").replace("{goal}", goal)
+        prompt = self.fetch_prompt("orchestrator.create_plan").format(
+            goal=goal,
+            os_info=self.current_os,
+            facts=facts
+        )
         try:
             res = await self.plan_gen.ainvoke(prompt)
             # handle cases where the model might return the raw text if structured output fails
@@ -226,43 +232,79 @@ class Supervisor(Model):
             return sanitized
         return {}
 
-    async def edit_task(self, goal: str, state_json: str, task_id: str, task_json: str) -> Task:
+    async def edit_task(self, goal: str, history: str, task_id: str, task: Task, all_valid_tids: set, facts: str = "") -> Task:
         """
         refines or revises a specific task based on context and failures.
 
         args:
             goal (str): the user's high-level goal.
-            state_json (str): current global state in json format.
+            history (str): execution log history in tree format.
             task_id (str): identifier of the task being edited.
-            task_json (str): the current task data in json format.
+            task (Task): the current task object.
+            all_valid_tids (set): set of all valid task IDs in the current state.
+            facts (str): recalled environment facts.
 
         returns:
             Task: the updated task object.
         """
-        prompt = self.fetch_prompt("supervisor.edit_task") \
-            .replace("{goal}", goal) \
-            .replace("{state_json}", state_json) \
-            .replace("{task_id}", task_id) \
-            .replace("{task_json}", task_json)
+        prompt = self.fetch_prompt("orchestrator.edit_task").format(
+            goal=goal,
+            os_info=self.current_os,
+            history=history,
+            task_id=task_id,
+            task_description=task.description,
+            success_criteria=task.expected_output,
+            facts=facts
+        )
         res = await self.edit_gen.ainvoke(prompt)
-        return res.replacement_task
+        rt = res.replacement_task
+        if isinstance(rt, dict):
+            rt = Task(**rt)
+        
+        # ensure it doesn't hallucinate dependencies that don't exist in the current global state
+        if hasattr(rt, "depends_on") and isinstance(rt.depends_on, list):
+            rt.depends_on = [d for d in rt.depends_on if isinstance(d, str) and d in all_valid_tids]
+        
+        # reset findings for the new attempt
+        rt.findings_summary = None
+        rt.failure_reason = None
+        return rt
 
-    async def replan(self, goal: str, state_json: str) -> Dict[str, Task]:
+    async def replan(self, goal: str, history: str, existing_tids: set, facts: str = "") -> Dict[str, Task]:
         """
         restructures the remaining plan when the workflow is blocked.
 
         args:
             goal (str): the user's high-level goal.
-            state_json (str): current global state in json format.
+            history (str): execution log history in tree format.
+            existing_tids (set): set of IDs from tasks that are already 'done'.
+            facts (str): recalled environment facts.
 
         returns:
             Dict[str, Task]: the new set of tasks for the replan.
         """
-        prompt = self.fetch_prompt("supervisor.replan") \
-            .replace("{goal}", goal) \
-            .replace("{state_json}", state_json)
+        prompt = self.fetch_prompt("orchestrator.replan").format(
+            goal=goal,
+            os_info=self.current_os,
+            history=history,
+            facts=facts
+        )
         res = await self.replan_gen.ainvoke(prompt)
-        return res.tasks
+        tasks = res.tasks if hasattr(res, "tasks") else {}
+        
+        sanitized = {}
+        if isinstance(tasks, dict):
+            # allow dependencies on new tasks OR tasks that were already completed
+            all_valid_tids = set(tasks.keys()) | existing_tids
+            for tid, t in tasks.items():
+                if isinstance(t, dict):
+                    t = Task(**t)
+                if hasattr(t, "depends_on") and isinstance(t.depends_on, list):
+                    t.depends_on = [d for d in t.depends_on if isinstance(d, str) and d in all_valid_tids]
+                t.findings_summary = None
+                t.failure_reason = None
+                sanitized[tid] = t
+        return sanitized
 
     def dependencies_satisfied(self, task: Task, tasks: Dict[str, Task]) -> bool:
         """
@@ -318,34 +360,57 @@ class Supervisor(Model):
                 merged[tid] = t
         return merged
 
-    async def dispatch(self, task: Task, session_id: str) -> AnalystReport | str:
+    async def dispatch(self, task: Task, state: PlanState, session_id: str) -> AnalystReport | str:
         """
-        dispatches a task to the reconnaissance agent.
+        dispatches a task to the reconnaissance agent with a structured ASCII tree of dependencies.
 
         args:
             task (Task): the task object to execute.
+            state (PlanState): the current global plan state.
             session_id (str): identifier for the current session.
 
         returns:
             AnalystReport | str: result from the execution agent.
         """
-        logger.info(f"dispatching task to recon agent: {task.description[:50]}")
-        return await self.recon(task.description, session_id=session_id, os_info=self.current_os)
+        prompt_lines = [f"### TASK: {task.description}"]
+        
+        if task.depends_on:
+            prompt_lines.append("\n### DEPENDENCY HISTORY")
+            prompt_lines.append("The following technical context was gathered from parent tasks:\n")
+            
+            for i, dep_id in enumerate(task.depends_on):
+                dep_task = state.tasks.get(dep_id)
+                if not dep_task:
+                    continue
+                
+                is_last = (i == len(task.depends_on) - 1)
+                prefix = "└── " if is_last else "┌── "
+                pipe = "    " if is_last else "│   "
+                
+                prompt_lines.append(f"{prefix}{dep_id} -> {dep_task.description}")
+                
+                # findings
+                findings = dep_task.findings_summary or "No findings recorded."
+                # nuances for this task
+                dep_nuances = {k: n.value for k, n in state.nuances.items() if n.source_task == dep_id}
+                
+                if dep_nuances:
+                    prompt_lines.append(f"{pipe}├── Findings: {findings}")
+                    # format nuances as string key: value
+                    nuance_str = ", ".join([f"{k}: {v}" for k, v in dep_nuances.items()])
+                    prompt_lines.append(f"{pipe}└── Information:     {nuance_str}")
+                else:
+                    prompt_lines.append(f"{pipe}└── Findings: {findings}")
+                
+                if not is_last:
+                    prompt_lines.append("│")
+
+        prompt = "\n".join(prompt_lines)
+        logger.info(f"DISPATCHING TASK TO RECON AGENT:\n{prompt}")
+        return await self.recon(prompt, session_id=session_id, os_info=self.current_os)
+
 
     async def __call__(self, goal: str, session_id: str) -> str:
-        """
-        entry point for executing a goal through the supervisor.
-
-        args:
-            goal (str): the user's high-level goal.
-            session_id (str): identifier for the current session.
-
-        returns:
-            str: final execution log.
-        """
-        return await self.run(goal, session_id)
-
-    async def run(self, goal: str, session_id: str) -> str:
         """
         orchestrates the entire planning and execution lifecycle.
 
@@ -370,16 +435,13 @@ class Supervisor(Model):
         
         self.current_os = os_info
 
-        # inject mem0 facts into planning to make the supervisor environment-aware
+        # recall environment facts for better planning context
         facts = self.memory.recall(goal, session_id=session_id)
-        planning_goal = f"GOAL: {goal}\nOS: {self.current_os}"
-        if facts:
-            planning_goal += f"\n\nRECALLED_ENVIRONMENT_FACTS:\n{facts}"
 
         state = PlanState(goal=goal, tasks={})
         self.save_state(state)
         
-        tasks = await self.create_plan(planning_goal)
+        tasks = await self.create_plan(goal, facts=facts)
         if not tasks:
             state.status = "failure"
             state.abort_reason = "planning failed"
@@ -408,21 +470,21 @@ class Supervisor(Model):
                 # retry/edit loop
                 for attempt in range(self.max_edit + 1):
                     if attempt > 0:
-                        # inject facts into editing to help bypass obstacles
-                        facts = self.memory.recall(task.description, session_id=session_id)
-                        edit_goal = f"{state.goal}\n\nENVIRONMENT_CONTEXT:\n{facts}" if facts else state.goal
-                        task = await self.edit_task(edit_goal, state.model_dump_json(), tid, task.model_dump_json())
+                        task = await self.edit_task(state.goal, self.generate_log(state), tid, task, set(state.tasks.keys()), facts=facts)
                         state.tasks[tid] = task
                         self.save_state(state)
 
                     try:
-                        res = await self.dispatch(task, session_id=session_id)
+                        res = await self.dispatch(task, state, session_id=session_id)
+                        
+                        # capture nuances regardless of status to build a technical environment map
+                        if hasattr(res, "nuances") and res.nuances:
+                            for key, value in res.nuances.items():
+                                state.nuances[key] = Nuance(value=str(value), source_task=tid)
+
                         if hasattr(res, "status") and res.status == "done":
                             task.findings_summary = res.findings_summary
                             task.failure_reason = None
-                            if hasattr(res, "nuances") and res.nuances:
-                                for key, value in res.nuances.items():
-                                    state.nuances[key] = Nuance(value=str(value), source_task=tid)
                             success = True
                             break
                         else:
@@ -461,8 +523,10 @@ class Supervisor(Model):
             if self.is_blocked(state.tasks):
                 if replan_count < self.max_replan:
                     replan_count += 1
-                    # replan maintains the existing state file, just updating tasks
-                    new_tasks = await self.replan(state.goal, state.model_dump_json())
+                    logger.info(f"workflow blocked. initiating replan (attempt {replan_count})")
+                    
+                    done_tids = {tid for tid, t in state.tasks.items() if t.status == "done"}
+                    new_tasks = await self.replan(state.goal, self.generate_log(state), done_tids, facts=facts)
                     state.tasks = self.merge_tasks(state.tasks, new_tasks)
                     self.save_state(state)
                     continue
@@ -502,7 +566,9 @@ class Supervisor(Model):
         task_ids = list(state.tasks.keys())
         for tid in task_ids:
             t = state.tasks[tid]
-            log.append(f"- {tid} ({t.status}): {t.description}")
+            dep_str = f" [depends: {', '.join(t.depends_on)}]" if t.depends_on else ""
+            log.append(f"- {tid} ({t.status}){dep_str}: {t.description}")
+            log.append(f"  > EXPECTED: {t.expected_output}")
             if t.findings_summary:
                 log.append(f"  > FINDINGS: {t.findings_summary}")
             if t.failure_reason:
@@ -562,13 +628,13 @@ class Reporter(Model):
     # final agent responsible for synthesizing results and interacting with the user
     def __init__(self):
         """
-        initializes the reporter agent with its supervisor.
+        initializes the reporter agent with its orchestrator.
 
         returns:
             none
         """
         super().__init__()
-        self.supervisor = Supervisor()
+        self.orchestrator = Orchestrator()
         self.agent = None
         self.tools = []
         self.active_session = None
@@ -577,9 +643,6 @@ class Reporter(Model):
     async def _ensure_agent(self):
         """
         ensures the synthetic agent is initialized with filtered mcp and internal tools.
-
-        returns:
-            none
         """
         if self.agent: return
 
@@ -595,9 +658,9 @@ class Reporter(Model):
         self.tools = [
             StructuredTool.from_function(
                 name="orchestrator",
-                coroutine=self.supervisor_run,
-                description="Run multi-step local system tasks or code investigations. Returns a status tree. Findings are committed to memory.",
-                args_schema=SupervisorRunSchema
+                coroutine=self.orchestrator_run,
+                description="Run multi-step local system tasks, terminal commands (e.g. ls, cat, etc), or code investigations. Returns a status tree. Findings are committed to memory. USE THIS TOOL whenever you need to interact with the local file system or OS.",
+                args_schema=OrchestratorRunSchema
             ),
             StructuredTool.from_function(
                 name="memory_query",
@@ -607,10 +670,17 @@ class Reporter(Model):
             )
         ] + mcp_tools
         
+        @dynamic_prompt
+        def reporter_prompt(request):
+            facts = request.state.get("facts", "")
+            os_info = request.state.get("os_info", "unknown")
+            prompt = self.prompts.get("reporter", {}).get("system_prompt", "")
+            return prompt.format(facts=facts, os_info=os_info)
+
         self.agent = create_agent(
             model=self.core_model,
-            system_prompt=self.fetch_prompt("reporter.system_prompt"),
             tools=self.tools,
+            middleware=[reporter_prompt],
             name="reporter"
         )
 
@@ -627,9 +697,9 @@ class Reporter(Model):
         # tool call now focuses on document-level retrieval from qdrant
         return self.memory.query(query, session_id=self.active_session)
 
-    async def supervisor_run(self, task: str) -> str:
+    async def orchestrator_run(self, task: str) -> str:
         """
-        executes a complex, multi-step task through the supervisor.
+        executes a complex, multi-step task through the orchestrator.
 
         args:
             task (str): multi-step local request to execute.
@@ -637,7 +707,7 @@ class Reporter(Model):
         returns:
             str: llm-friendly log of the execution flow.
         """
-        return await self.supervisor.run(task, session_id=self.active_session)
+        return await self.orchestrator(task, session_id=self.active_session)
 
     async def __call__(self, query: str, session_id: str):
         """
@@ -660,14 +730,27 @@ class Reporter(Model):
             # inject high-level facts (mem0) into the prompt context
             facts = self.memory.recall(query, session_id=session_id)
 
+            # fetch os info for environmental awareness
+            os_info = self.orchestrator.current_os
+            if os_info == "unknown":
+                try:
+                    ping_data = await self.mcp_client.ping()
+                    if isinstance(ping_data, dict):
+                        os_info = ping_data.get("os", "unknown")
+                        self.orchestrator.current_os = os_info
+                except Exception:
+                    pass
+
             archive_all = self.memory.get_archive()
             session_history = archive_all.get(session_id, [])
 
             messages = session_history + [{"role": "user", "content": query}]
-            if facts:
-                messages.insert(0, {"role": "system", "content": f"RECALLED FACTS:\n{facts}"})
 
-            async for chunk in self.agent.astream({"messages": messages}, config={"max_iterations": self.max_iter}, stream_mode="messages"):
+            async for chunk in self.agent.astream(
+                {"messages": messages, "facts": f"RECALLED FACTS:\n{facts}" if facts else "", "os_info": os_info}, 
+                config={"max_iterations": self.max_iter}, 
+                stream_mode="messages"
+            ):
          
                 if not isinstance(chunk, tuple):
                     continue
@@ -714,6 +797,12 @@ class Reporter(Model):
         archive_all[session_id].append({"role": "assistant", "content": response})
         if len(archive_all[session_id]) > 10: archive_all[session_id] = archive_all[session_id][-10:]
         self.memory.save_archive(archive_all)
+        
+        # extract facts from the conversation to update long-term memory (mem0)
+        self.memory.memorize([
+            {"role": "user", "content": query},
+            {"role": "assistant", "content": response}
+        ], session_id=session_id)
 
     def clear_session(self, session_id: Optional[str] = None):
         """
@@ -727,7 +816,7 @@ class Reporter(Model):
         """
         target_session = session_id or self.active_session
         # wipe the global plan state whenever a session is cleared
-        self.supervisor.wipe_state()
+        self.orchestrator.wipe_state()
         self.memory.clear_session(target_session)
 
     def purge_all(self):
@@ -738,7 +827,6 @@ class Reporter(Model):
             none
         """
         # wipe the global plan state during a total purge
-        self.supervisor.wipe_state()
+        self.orchestrator.wipe_state()
         self.memory.purge_all()
-
 

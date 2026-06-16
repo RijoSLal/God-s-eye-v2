@@ -1,5 +1,6 @@
 from supervisor import Model
 from langchain.agents import create_agent
+from langchain.agents.middleware import dynamic_prompt
 from langchain_core.tools import StructuredTool
 from structure import AnalystReport, AnalystSchema
 from langchain.agents.structured_output import ProviderStrategy
@@ -28,11 +29,18 @@ class Analyst(Model):
             )
         ]
         
+        @dynamic_prompt
+        def analyst_prompt(request):
+            facts = request.state.get("facts", "")
+            os_info = request.state.get("os_info", "unknown")
+            prompt = self.prompts.get("analyst", {}).get("system_prompt", "")
+            return prompt.format(facts=facts, os_info=os_info)
+
         self.analyst_agent = create_agent(
             model = self.core_model,
-            system_prompt = self.fetch_prompt("analyst.system_prompt"),
             tools = self.tools,
             response_format=ProviderStrategy(schema=AnalystReport),
+            middleware=[analyst_prompt],
             name="analyst"
         )
 
@@ -78,20 +86,30 @@ class Analyst(Model):
         self.active_session = session_id
         logger.info(f"running technical audit for session: {session_id}")
         
+        # fetch os info for environmental awareness during audit
+        os_info = "unknown"
+        try:
+            ping_data = await self.mcp_client.ping()
+            if isinstance(ping_data, dict):
+                os_info = ping_data.get("os", "unknown")
+        except Exception:
+            pass
+
         # inject facts (mem0) into the audit to detect contradictions with reality
         facts = self.memory.recall(original_query or operations, session_id=session_id)
 
         # construct user message using the prompt from yaml
-        user_content = self.fetch_prompt("analyst.user_prompt", "{operations}").replace("{operations}", operations)
-        if facts:
-            user_content = f"VERIFIED_FACTS:\n{facts}\n\nCURRENT_LOGS_TO_AUDIT:\n{user_content}"
+        user_content = self.fetch_prompt("analyst.user_prompt", "{operations}").format(
+            operations=operations,
+            goal=original_query
+        )
             
         messages = [{"role": "user", "content": user_content}]
 
         # execute the analyst agent with stdout redirected to the log queue to keep the main console clean
 
         result = await self.analyst_agent.ainvoke(
-            {"messages": messages},
+            {"messages": messages, "facts": f"VERIFIED_FACTS:\n{facts}" if facts else "", "os_info": os_info},
             config = {"max_iterations": self.max_iter, "callbacks": []}
         ) 
     

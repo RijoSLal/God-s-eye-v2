@@ -28,7 +28,7 @@ async def web_search(query: str, surface: bool = False) -> str:
         query: search query.
         surface: whether to use surface search (faster) or deep search.
     """
-    res = await searcher.search(query, surface=surface)
+    res = await searcher(query, surface=surface)
     return res
 
 @mcp.tool(

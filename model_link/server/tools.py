@@ -36,7 +36,7 @@ class Searcher:
             model=m_config.get("model"),
             base_url=m_config.get("base_url"),
             temperature=m_config.get("temperature", 0.2),
-            api_key=m_config.get("api_key")
+            api_key=m_config.get("api_key"),  
         )
 
     async def ping(self) -> bool:
@@ -242,12 +242,15 @@ class Searcher:
         async with AsyncWebCrawler(
             config = self.browser_cfg
         ) as crawler:
-
-            results = await crawler.arun_many(
-                urls = urls,
-                config = cfg,
-                dispatcher = dispatcher,
-            )
+            try:
+                results = await crawler.arun_many(
+                    urls = urls,
+                    config = cfg,
+                    dispatcher = dispatcher,
+                )
+            except Exception as e:
+                logger.error(f"crawler execution error: {e}")
+                return f"CRAWL FAILED: {str(e)}. NO USEFUL CONTENT EXTRACTED."
 
         chunks = [
             r.markdown.fit_markdown.strip()
@@ -255,7 +258,7 @@ class Searcher:
             if (
                 r.success
                 and r.markdown
-                and len(r.markdown.fit_markdown.strip()) > 150
+                and r.markdown.fit_markdown.strip()
             )
         ]
 

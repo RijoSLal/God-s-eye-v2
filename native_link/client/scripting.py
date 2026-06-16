@@ -1,5 +1,6 @@
 from supervisor import Model
 from langchain.agents import create_agent
+from langchain.agents.middleware import dynamic_prompt
 from langchain_core.tools import StructuredTool
 from auditing import Analyst
 from logs.logging_setup import logger
@@ -167,6 +168,10 @@ class Recon(Model):
             if clean_content:
                 lines = str(clean_content).splitlines()
                 if lines:
+                    # truncate huge outputs to keep analyst prompts lean
+                    if len(lines) > 20:
+                        lines = lines[:10] + ["... [TRUNCATED] ..."] + lines[-10:]
+                    
                     tree_segments.append(f"{info_indent}└── Output: {lines[0]}")
                     for line in lines[1:]:
                         tree_segments.append(f"{info_indent}            {line}")
@@ -227,10 +232,16 @@ class Recon(Model):
             
             combined_tools = mcp_tools + [terminal_tool, memory_tool]
             
+            @dynamic_prompt
+            def recon_prompt(request):
+                os_info = request.state.get("os_info", "unknown")
+                prompt = self.prompts.get("recon", {}).get("system_prompt", "")
+                return prompt.format(os_info=os_info)
+
             self.script_agent = create_agent(
                 model = self.core_model,
-                system_prompt=self.fetch_prompt("recon.system_prompt"), 
                 tools = combined_tools, 
+                middleware=[recon_prompt],
                 name="recon"
             )
 
@@ -243,12 +254,11 @@ class Recon(Model):
             except Exception:
                 os_info = "unknown"
 
-        # 2. build initial message list - inject os context
-        execution_query = f"OS: {os_info}\nTASK: {query}"
-        messages = [{"role": "user", "content": execution_query}]
+        # 2. build initial message list
+        messages = [{"role": "user", "content": query}]
 
         result = await self.script_agent.ainvoke(
-            {"messages": messages},
+            {"messages": messages, "os_info": os_info},
             config = {"max_iterations": self.max_iter, "callbacks": []}
         )
         

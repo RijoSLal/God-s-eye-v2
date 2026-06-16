@@ -1,24 +1,451 @@
-2026-06-05 20:06:46,120 | INFO | gods_eye | configuration synchronized from mcp_config.yaml
-2026-06-05 20:06:46,123 | INFO | gods_eye | initializing mcp helpers: recon and searcher
-2026-06-05 20:07:59,418 | INFO | gods_eye | ping request received
-2026-06-05 20:24:06,691 | INFO | gods_eye | ping request received
-2026-06-05 20:24:36,916 | INFO | gods_eye | ping request received
-2026-06-05 20:24:52,558 | INFO | gods_eye | executing remote: rtk ip addr show
-2026-06-05 20:25:21,408 | INFO | gods_eye | executing remote: rtk netstat -tulnp | grep -E 'ESTABLISHED|LISTEN'
-2026-06-05 20:37:53,169 | INFO | gods_eye | ping request received
-2026-06-05 20:41:32,414 | INFO | gods_eye | executing remote: rtk netstat -tulnp
-2026-06-05 20:42:23,907 | INFO | gods_eye | executing remote: rtk ip addr show
-2026-06-05 20:42:33,436 | INFO | gods_eye | executing remote: rtk ss -tuln
-2026-06-05 20:51:09,411 | INFO | gods_eye | configuration synchronized from mcp_config.yaml
-2026-06-05 20:51:09,414 | INFO | gods_eye | initializing mcp helpers: recon and searcher
-2026-06-05 20:51:10,617 | INFO | gods_eye | ping request received
-2026-06-05 20:53:19,277 | INFO | gods_eye | ping request received
-2026-06-05 20:54:04,768 | INFO | gods_eye | ping request received
-2026-06-05 20:54:24,468 | INFO | gods_eye | executing remote: rtk ip addr show
-2026-06-05 20:54:51,520 | INFO | gods_eye | executing remote: rtk ss -tuln
-2026-06-05 20:55:18,257 | INFO | gods_eye | executing remote: rtk netstat -s
-2026-06-05 20:56:30,177 | INFO | gods_eye | executing remote: rtk ss -tuln
-2026-06-05 20:57:05,683 | INFO | gods_eye | executing remote: rtk uname -a
-2026-06-05 20:57:56,612 | INFO | gods_eye | executing remote: rtk ip addr show
-2026-06-05 20:57:56,619 | INFO | gods_eye | executing remote: rtk ss -tuln
-2026-06-05 21:27:47,568 | INFO | gods_eye | ping request received
+test
+2026-06-15 19:10:42,139 | INFO | gods_eye | configuration synchronized from mcp_config.yaml
+2026-06-15 19:10:42,142 | INFO | gods_eye | initializing mcp helpers: recon and searcher
+2026-06-15 19:10:42,613 | WARNING | uvicorn.error | ASGI app factory detected. Using it, but please consider setting the --factory flag explicitly.
+2026-06-15 19:10:42,613 | INFO | uvicorn.error | Started server process [1]
+2026-06-15 19:10:42,613 | INFO | uvicorn.error | Waiting for application startup.
+2026-06-15 19:10:42,614 | INFO | uvicorn.error | Application startup complete.
+2026-06-15 19:10:42,614 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-06-15 19:16:39,391 | INFO | gods_eye | ping request received
+2026-06-15 19:16:42,466 | INFO | uvicorn.access | 172.18.0.5:39590 - "GET /ping HTTP/1.1" 200
+2026-06-15 19:17:29,445 | INFO | uvicorn.access | 172.18.0.5:37176 - "POST /mcp HTTP/1.1" 200
+2026-06-15 19:17:29,462 | INFO | uvicorn.access | 172.18.0.5:37192 - "POST /mcp HTTP/1.1" 202
+2026-06-15 19:17:29,467 | INFO | uvicorn.access | 172.18.0.5:37194 - "GET /mcp HTTP/1.1" 200
+2026-06-15 19:17:29,470 | INFO | uvicorn.access | 172.18.0.5:37208 - "POST /mcp HTTP/1.1" 200
+2026-06-15 19:17:29,484 | INFO | uvicorn.access | 172.18.0.5:37222 - "DELETE /mcp HTTP/1.1" 200
+2026-06-15 19:17:32,911 | INFO | gods_eye | ping request received
+2026-06-15 19:17:36,186 | INFO | uvicorn.access | 172.18.0.5:37230 - "GET /ping HTTP/1.1" 200
+2026-06-15 19:19:19,940 | INFO | uvicorn.access | 172.18.0.5:36140 - "POST /mcp HTTP/1.1" 200
+2026-06-15 19:19:19,956 | INFO | uvicorn.access | 172.18.0.5:36142 - "POST /mcp HTTP/1.1" 202
+2026-06-15 19:19:19,957 | INFO | uvicorn.access | 172.18.0.5:36154 - "GET /mcp HTTP/1.1" 200
+2026-06-15 19:19:19,964 | INFO | uvicorn.access | 172.18.0.5:36158 - "POST /mcp HTTP/1.1" 200
+2026-06-15 19:19:34,066 | INFO | uvicorn.access | 172.18.0.5:40372 - "POST /mcp HTTP/1.1" 200
+2026-06-15 19:19:34,078 | INFO | uvicorn.access | 172.18.0.5:40384 - "DELETE /mcp HTTP/1.1" 200
+2026-06-15 19:20:22,893 | INFO | uvicorn.access | 172.18.0.5:37426 - "POST /mcp HTTP/1.1" 200
+2026-06-15 19:20:22,901 | INFO | uvicorn.access | 172.18.0.5:37434 - "GET /mcp HTTP/1.1" 200
+2026-06-15 19:20:22,901 | INFO | uvicorn.access | 172.18.0.5:37428 - "POST /mcp HTTP/1.1" 202
+2026-06-15 19:20:22,906 | INFO | uvicorn.access | 172.18.0.5:37440 - "POST /mcp HTTP/1.1" 200
+2026-06-15 19:20:33,045 | INFO | uvicorn.access | 172.18.0.5:39472 - "POST /mcp HTTP/1.1" 200
+2026-06-15 19:20:33,054 | INFO | uvicorn.access | 172.18.0.5:39484 - "DELETE /mcp HTTP/1.1" 200
+2026-06-15 19:22:06,512 | INFO | gods_eye | ping request received
+2026-06-15 19:22:10,034 | INFO | uvicorn.access | 172.18.0.5:50320 - "GET /ping HTTP/1.1" 200
+2026-06-15 19:22:17,827 | INFO | uvicorn.access | 172.18.0.5:44090 - "POST /mcp HTTP/1.1" 200
+2026-06-15 19:22:17,831 | INFO | uvicorn.access | 172.18.0.5:44114 - "GET /mcp HTTP/1.1" 200
+2026-06-15 19:22:17,831 | INFO | uvicorn.access | 172.18.0.5:44100 - "POST /mcp HTTP/1.1" 202
+2026-06-15 19:22:17,833 | INFO | uvicorn.access | 172.18.0.5:44120 - "POST /mcp HTTP/1.1" 200
+2026-06-15 19:22:17,836 | INFO | uvicorn.access | 172.18.0.5:44132 - "DELETE /mcp HTTP/1.1" 200
+2026-06-15 19:22:19,726 | INFO | uvicorn.access | 172.18.0.5:44134 - "POST /mcp HTTP/1.1" 200
+2026-06-15 19:22:19,732 | INFO | uvicorn.access | 172.18.0.5:44136 - "POST /mcp HTTP/1.1" 202
+2026-06-15 19:22:19,733 | INFO | uvicorn.access | 172.18.0.5:44138 - "GET /mcp HTTP/1.1" 200
+2026-06-15 19:22:19,735 | INFO | uvicorn.access | 172.18.0.5:44142 - "POST /mcp HTTP/1.1" 200
+2026-06-15 19:22:19,738 | INFO | uvicorn.access | 172.18.0.5:44148 - "DELETE /mcp HTTP/1.1" 200
+2026-06-15 19:22:19,747 | INFO | uvicorn.access | 172.18.0.5:44152 - "POST /mcp HTTP/1.1" 200
+2026-06-15 19:22:19,750 | INFO | uvicorn.access | 172.18.0.5:44160 - "POST /mcp HTTP/1.1" 202
+2026-06-15 19:22:19,750 | INFO | uvicorn.access | 172.18.0.5:44170 - "GET /mcp HTTP/1.1" 200
+2026-06-15 19:22:19,753 | INFO | uvicorn.access | 172.18.0.5:44180 - "POST /mcp HTTP/1.1" 200
+2026-06-15 19:22:19,754 | INFO | gods_eye | executing remote: rtk ls
+2026-06-15 19:22:22,909 | INFO | uvicorn.access | 172.18.0.5:44186 - "POST /mcp HTTP/1.1" 200
+2026-06-15 19:22:22,921 | INFO | uvicorn.access | 172.18.0.5:44192 - "DELETE /mcp HTTP/1.1" 200
+2026-06-15 20:08:42,737 | INFO | gods_eye | ping request received
+2026-06-15 20:08:47,133 | INFO | uvicorn.access | 172.18.0.5:37654 - "GET /ping HTTP/1.1" 200
+2026-06-15 20:17:37,339 | INFO | uvicorn.access | 172.18.0.5:54746 - "POST /mcp HTTP/1.1" 200
+2026-06-15 20:17:37,365 | INFO | uvicorn.access | 172.18.0.5:54748 - "POST /mcp HTTP/1.1" 202
+2026-06-15 20:17:37,366 | INFO | uvicorn.access | 172.18.0.5:54764 - "GET /mcp HTTP/1.1" 200
+2026-06-15 20:17:37,372 | INFO | uvicorn.access | 172.18.0.5:54768 - "POST /mcp HTTP/1.1" 200
+2026-06-15 20:17:37,393 | INFO | uvicorn.access | 172.18.0.5:54778 - "DELETE /mcp HTTP/1.1" 200
+2026-06-15 20:17:42,596 | INFO | gods_eye | ping request received
+2026-06-15 20:17:46,122 | INFO | uvicorn.access | 172.18.0.5:54782 - "GET /ping HTTP/1.1" 200
+2026-06-15 20:24:59,849 | INFO | uvicorn.access | 172.18.0.5:42462 - "POST /mcp HTTP/1.1" 200
+2026-06-15 20:24:59,958 | INFO | uvicorn.access | 172.18.0.5:42478 - "GET /mcp HTTP/1.1" 200
+2026-06-15 20:24:59,961 | INFO | uvicorn.access | 172.18.0.5:42484 - "POST /mcp HTTP/1.1" 202
+2026-06-15 20:24:59,967 | INFO | uvicorn.access | 172.18.0.5:42490 - "POST /mcp HTTP/1.1" 200
+2026-06-15 20:25:14,880 | INFO | uvicorn.access | 172.18.0.5:34858 - "POST /mcp HTTP/1.1" 200
+2026-06-15 20:25:14,904 | INFO | uvicorn.access | 172.18.0.5:34866 - "DELETE /mcp HTTP/1.1" 200
+2026-06-15 21:28:24,603 | INFO | uvicorn.error | Shutting down
+2026-06-15 21:28:24,722 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-06-15 21:28:24,725 | INFO | uvicorn.error | Application shutdown complete.
+2026-06-15 21:28:24,732 | INFO | uvicorn.error | Finished server process [1]
+2026-06-16 05:51:23,250 | INFO | gods_eye | configuration synchronized from mcp_config.yaml
+2026-06-16 05:51:23,253 | INFO | gods_eye | initializing mcp helpers: recon and searcher
+2026-06-16 05:51:23,668 | WARNING | uvicorn.error | ASGI app factory detected. Using it, but please consider setting the --factory flag explicitly.
+2026-06-16 05:51:23,668 | INFO | uvicorn.error | Started server process [1]
+2026-06-16 05:51:23,668 | INFO | uvicorn.error | Waiting for application startup.
+2026-06-16 05:51:23,668 | INFO | uvicorn.error | Application startup complete.
+2026-06-16 05:51:23,668 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-06-16 05:52:35,510 | INFO | gods_eye | ping request received
+2026-06-16 05:52:39,406 | INFO | uvicorn.access | 172.18.0.5:39592 - "GET /ping HTTP/1.1" 200
+2026-06-16 05:54:42,079 | INFO | uvicorn.access | 172.18.0.5:33120 - "POST /mcp HTTP/1.1" 200
+2026-06-16 05:54:42,087 | INFO | uvicorn.access | 172.18.0.5:33132 - "POST /mcp HTTP/1.1" 202
+2026-06-16 05:54:42,088 | INFO | uvicorn.access | 172.18.0.5:33142 - "GET /mcp HTTP/1.1" 200
+2026-06-16 05:54:42,091 | INFO | uvicorn.access | 172.18.0.5:33144 - "POST /mcp HTTP/1.1" 200
+2026-06-16 05:54:42,094 | INFO | uvicorn.access | 172.18.0.5:33154 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 05:54:43,276 | INFO | gods_eye | ping request received
+2026-06-16 05:54:46,778 | INFO | uvicorn.access | 172.18.0.5:33160 - "GET /ping HTTP/1.1" 200
+2026-06-16 05:54:53,096 | INFO | gods_eye | ping request received
+2026-06-16 05:54:56,472 | INFO | uvicorn.access | 172.18.0.5:52758 - "GET /ping HTTP/1.1" 200
+2026-06-16 05:55:03,148 | INFO | uvicorn.access | 172.18.0.5:51294 - "POST /mcp HTTP/1.1" 200
+2026-06-16 05:55:03,153 | INFO | uvicorn.access | 172.18.0.5:51302 - "GET /mcp HTTP/1.1" 200
+2026-06-16 05:55:03,155 | INFO | uvicorn.access | 172.18.0.5:51316 - "POST /mcp HTTP/1.1" 202
+2026-06-16 05:55:03,158 | INFO | uvicorn.access | 172.18.0.5:51328 - "POST /mcp HTTP/1.1" 200
+2026-06-16 05:55:03,161 | INFO | uvicorn.access | 172.18.0.5:51344 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 05:55:04,970 | INFO | uvicorn.access | 172.18.0.5:51348 - "POST /mcp HTTP/1.1" 200
+2026-06-16 05:55:04,974 | INFO | uvicorn.access | 172.18.0.5:51368 - "GET /mcp HTTP/1.1" 200
+2026-06-16 05:55:04,975 | INFO | uvicorn.access | 172.18.0.5:51362 - "POST /mcp HTTP/1.1" 202
+2026-06-16 05:55:04,977 | INFO | uvicorn.access | 172.18.0.5:51382 - "POST /mcp HTTP/1.1" 200
+2026-06-16 05:55:04,979 | INFO | uvicorn.access | 172.18.0.5:51390 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 05:55:04,987 | INFO | uvicorn.access | 172.18.0.5:51398 - "POST /mcp HTTP/1.1" 200
+2026-06-16 05:55:04,992 | INFO | uvicorn.access | 172.18.0.5:51400 - "POST /mcp HTTP/1.1" 202
+2026-06-16 05:55:04,992 | INFO | uvicorn.access | 172.18.0.5:51410 - "GET /mcp HTTP/1.1" 200
+2026-06-16 05:55:04,994 | INFO | uvicorn.access | 172.18.0.5:51420 - "POST /mcp HTTP/1.1" 200
+2026-06-16 05:55:04,995 | INFO | gods_eye | executing remote: rtk ls
+2026-06-16 05:55:08,053 | INFO | uvicorn.access | 172.18.0.5:51428 - "POST /mcp HTTP/1.1" 200
+2026-06-16 05:55:08,062 | INFO | uvicorn.access | 172.18.0.5:51432 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 05:55:13,757 | INFO | gods_eye | ping request received
+2026-06-16 05:55:16,963 | INFO | uvicorn.access | 172.18.0.5:34074 - "GET /ping HTTP/1.1" 200
+2026-06-16 06:19:47,423 | INFO | gods_eye | ping request received
+2026-06-16 06:19:50,969 | INFO | uvicorn.access | 172.18.0.5:52150 - "GET /ping HTTP/1.1" 200
+2026-06-16 06:20:38,680 | INFO | uvicorn.access | 172.18.0.5:33986 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:20:38,686 | INFO | uvicorn.access | 172.18.0.5:33992 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:20:38,687 | INFO | uvicorn.access | 172.18.0.5:33994 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:20:38,715 | INFO | uvicorn.access | 172.18.0.5:34004 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:20:38,723 | INFO | uvicorn.access | 172.18.0.5:34018 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:20:40,011 | INFO | gods_eye | ping request received
+2026-06-16 06:20:43,506 | INFO | uvicorn.access | 172.18.0.5:34030 - "GET /ping HTTP/1.1" 200
+2026-06-16 06:20:59,873 | INFO | gods_eye | ping request received
+2026-06-16 06:21:02,862 | INFO | uvicorn.access | 172.18.0.5:51330 - "GET /ping HTTP/1.1" 200
+2026-06-16 06:21:10,640 | INFO | uvicorn.access | 172.18.0.5:55596 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:21:10,645 | INFO | uvicorn.access | 172.18.0.5:55610 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:21:10,645 | INFO | uvicorn.access | 172.18.0.5:55600 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:21:10,649 | INFO | uvicorn.access | 172.18.0.5:55616 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:21:10,651 | INFO | uvicorn.access | 172.18.0.5:55618 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:21:12,477 | INFO | uvicorn.access | 172.18.0.5:55088 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:21:12,484 | INFO | uvicorn.access | 172.18.0.5:55094 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:21:12,486 | INFO | uvicorn.access | 172.18.0.5:55098 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:21:12,488 | INFO | uvicorn.access | 172.18.0.5:55110 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:21:12,491 | INFO | uvicorn.access | 172.18.0.5:55112 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:21:12,507 | INFO | uvicorn.access | 172.18.0.5:55122 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:21:12,513 | INFO | uvicorn.access | 172.18.0.5:55124 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:21:12,515 | INFO | uvicorn.access | 172.18.0.5:55126 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:21:12,519 | INFO | uvicorn.access | 172.18.0.5:55130 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:21:12,525 | INFO | gods_eye | executing remote: rtk ls
+2026-06-16 06:21:15,372 | INFO | uvicorn.access | 172.18.0.5:55144 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:21:15,392 | INFO | uvicorn.access | 172.18.0.5:55156 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:21:19,915 | INFO | gods_eye | ping request received
+2026-06-16 06:21:22,431 | INFO | uvicorn.access | 172.18.0.5:55166 - "GET /ping HTTP/1.1" 200
+2026-06-16 06:22:48,019 | INFO | gods_eye | ping request received
+2026-06-16 06:22:51,621 | INFO | uvicorn.access | 172.18.0.5:34088 - "GET /ping HTTP/1.1" 200
+2026-06-16 06:23:01,432 | INFO | uvicorn.access | 172.18.0.5:55350 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:23:01,438 | INFO | uvicorn.access | 172.18.0.5:55368 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:23:01,439 | INFO | uvicorn.access | 172.18.0.5:55366 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:23:01,443 | INFO | uvicorn.access | 172.18.0.5:55374 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:23:01,444 | INFO | gods_eye | executing remote: rtk cat open_ports.txt
+2026-06-16 06:23:04,492 | INFO | uvicorn.access | 172.18.0.5:55376 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:23:04,497 | INFO | uvicorn.access | 172.18.0.5:55390 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:23:08,940 | INFO | gods_eye | ping request received
+2026-06-16 06:23:12,407 | INFO | uvicorn.access | 172.18.0.5:55402 - "GET /ping HTTP/1.1" 200
+2026-06-16 06:23:38,324 | INFO | uvicorn.access | 172.18.0.5:45234 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:23:38,328 | INFO | uvicorn.access | 172.18.0.5:45250 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:23:38,328 | INFO | uvicorn.access | 172.18.0.5:45256 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:23:38,330 | INFO | uvicorn.access | 172.18.0.5:45260 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:23:38,330 | INFO | gods_eye | executing remote: rtk cat open_ports.txt
+2026-06-16 06:23:41,595 | INFO | uvicorn.access | 172.18.0.5:52174 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:23:41,611 | INFO | uvicorn.access | 172.18.0.5:52188 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:23:47,456 | INFO | gods_eye | ping request received
+2026-06-16 06:23:50,786 | INFO | uvicorn.access | 172.18.0.5:52198 - "GET /ping HTTP/1.1" 200
+2026-06-16 06:24:21,265 | INFO | uvicorn.access | 172.18.0.5:34408 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:24:21,269 | INFO | uvicorn.access | 172.18.0.5:34414 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:24:21,270 | INFO | uvicorn.access | 172.18.0.5:34418 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:24:21,272 | INFO | uvicorn.access | 172.18.0.5:34422 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:24:21,273 | INFO | gods_eye | executing remote: rtk ls -la open_ports.txt
+2026-06-16 06:24:24,469 | INFO | uvicorn.access | 172.18.0.5:34434 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:24:24,482 | INFO | uvicorn.access | 172.18.0.5:34448 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:24:26,630 | INFO | uvicorn.access | 172.18.0.5:34464 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:24:26,634 | INFO | uvicorn.access | 172.18.0.5:34476 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:24:26,637 | INFO | uvicorn.access | 172.18.0.5:34486 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:24:26,638 | INFO | uvicorn.access | 172.18.0.5:34488 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:24:26,639 | INFO | gods_eye | executing remote: rtk cat open_ports.txt
+2026-06-16 06:24:29,934 | INFO | uvicorn.access | 172.18.0.5:34500 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:24:29,948 | INFO | uvicorn.access | 172.18.0.5:34504 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:24:36,311 | INFO | gods_eye | ping request received
+2026-06-16 06:24:39,712 | INFO | uvicorn.access | 172.18.0.5:58462 - "GET /ping HTTP/1.1" 200
+2026-06-16 06:25:02,776 | INFO | gods_eye | ping request received
+2026-06-16 06:25:06,054 | INFO | uvicorn.access | 172.18.0.5:36324 - "GET /ping HTTP/1.1" 200
+2026-06-16 06:25:21,203 | INFO | uvicorn.access | 172.18.0.5:37164 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:25:21,206 | INFO | uvicorn.access | 172.18.0.5:37170 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:25:21,206 | INFO | uvicorn.access | 172.18.0.5:37186 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:25:21,209 | INFO | uvicorn.access | 172.18.0.5:37190 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:25:21,209 | INFO | gods_eye | executing remote: rtk ls -la open_ports.txt
+2026-06-16 06:25:24,388 | INFO | uvicorn.access | 172.18.0.5:37206 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:25:24,401 | INFO | uvicorn.access | 172.18.0.5:37216 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:25:25,864 | INFO | gods_eye | ping request received
+2026-06-16 06:25:29,206 | INFO | uvicorn.access | 172.18.0.5:37224 - "GET /ping HTTP/1.1" 200
+2026-06-16 06:29:25,944 | INFO | uvicorn.access | 172.18.0.5:46898 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:29:25,952 | INFO | uvicorn.access | 172.18.0.5:46912 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:29:25,953 | INFO | uvicorn.access | 172.18.0.5:46920 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:29:25,956 | INFO | uvicorn.access | 172.18.0.5:46930 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:29:46,957 | INFO | uvicorn.access | 172.18.0.5:52018 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:29:46,969 | INFO | uvicorn.access | 172.18.0.5:52030 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:38:55,387 | INFO | gods_eye | ping request received
+2026-06-16 06:38:58,622 | INFO | uvicorn.access | 172.18.0.5:51364 - "GET /ping HTTP/1.1" 200
+2026-06-16 06:39:19,264 | INFO | uvicorn.access | 172.18.0.5:41554 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:39:19,270 | INFO | uvicorn.access | 172.18.0.5:41564 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:39:19,271 | INFO | uvicorn.access | 172.18.0.5:41570 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:39:19,275 | INFO | uvicorn.access | 172.18.0.5:41584 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:39:19,276 | INFO | gods_eye | executing remote: rtk nmap -sn 192.168.1.0/24
+2026-06-16 06:42:48,857 | INFO | uvicorn.access | 172.18.0.5:56412 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:42:48,862 | INFO | uvicorn.access | 172.18.0.5:56422 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:42:53,057 | INFO | gods_eye | ping request received
+2026-06-16 06:42:56,112 | INFO | uvicorn.access | 172.18.0.5:50312 - "GET /ping HTTP/1.1" 200
+2026-06-16 06:50:04,845 | INFO | gods_eye | ping request received
+2026-06-16 06:50:07,957 | INFO | uvicorn.access | 172.18.0.5:33612 - "GET /ping HTTP/1.1" 200
+2026-06-16 06:51:26,650 | INFO | uvicorn.access | 172.18.0.5:43972 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:51:26,658 | INFO | uvicorn.access | 172.18.0.5:43976 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:51:26,660 | INFO | uvicorn.access | 172.18.0.5:43988 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:51:26,662 | INFO | uvicorn.access | 172.18.0.5:43996 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:51:26,670 | INFO | uvicorn.access | 172.18.0.5:44010 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:51:28,044 | INFO | gods_eye | ping request received
+2026-06-16 06:51:31,517 | INFO | uvicorn.access | 172.18.0.5:44014 - "GET /ping HTTP/1.1" 200
+2026-06-16 06:51:33,770 | INFO | gods_eye | ping request received
+2026-06-16 06:51:36,457 | INFO | uvicorn.access | 172.18.0.5:48448 - "GET /ping HTTP/1.1" 200
+2026-06-16 06:51:45,688 | INFO | uvicorn.access | 172.18.0.5:38818 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:51:45,692 | INFO | uvicorn.access | 172.18.0.5:38834 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:51:45,693 | INFO | uvicorn.access | 172.18.0.5:38836 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:51:45,695 | INFO | uvicorn.access | 172.18.0.5:38848 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:51:45,698 | INFO | uvicorn.access | 172.18.0.5:38862 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:51:47,912 | INFO | uvicorn.access | 172.18.0.5:38868 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:51:47,916 | INFO | uvicorn.access | 172.18.0.5:38872 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:51:47,916 | INFO | uvicorn.access | 172.18.0.5:38882 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:51:47,919 | INFO | uvicorn.access | 172.18.0.5:38884 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:51:47,925 | INFO | uvicorn.access | 172.18.0.5:38892 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:51:47,938 | INFO | uvicorn.access | 172.18.0.5:38900 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:51:47,944 | INFO | uvicorn.access | 172.18.0.5:38916 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:51:47,944 | INFO | uvicorn.access | 172.18.0.5:38928 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:51:47,946 | INFO | uvicorn.access | 172.18.0.5:38930 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:51:47,952 | INFO | gods_eye | executing remote: rtk ls
+2026-06-16 06:51:51,305 | INFO | uvicorn.access | 172.18.0.5:56750 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:51:51,317 | INFO | uvicorn.access | 172.18.0.5:56762 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:51:55,938 | INFO | gods_eye | ping request received
+2026-06-16 06:51:59,058 | INFO | uvicorn.access | 172.18.0.5:56768 - "GET /ping HTTP/1.1" 200
+2026-06-16 06:52:53,794 | INFO | gods_eye | ping request received
+2026-06-16 06:52:57,424 | INFO | uvicorn.access | 172.18.0.5:51386 - "GET /ping HTTP/1.1" 200
+2026-06-16 06:53:15,238 | INFO | uvicorn.access | 172.18.0.5:41896 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:53:15,243 | INFO | uvicorn.access | 172.18.0.5:41910 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:53:15,244 | INFO | uvicorn.access | 172.18.0.5:41914 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:53:15,258 | INFO | uvicorn.access | 172.18.0.5:41920 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:53:15,259 | INFO | gods_eye | executing remote: rtk cat open_ports.txt
+2026-06-16 06:53:18,817 | INFO | uvicorn.access | 172.18.0.5:41936 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:53:18,824 | INFO | uvicorn.access | 172.18.0.5:41946 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:53:23,786 | INFO | gods_eye | ping request received
+2026-06-16 06:53:27,036 | INFO | uvicorn.access | 172.18.0.5:53574 - "GET /ping HTTP/1.1" 200
+2026-06-16 06:53:50,612 | INFO | uvicorn.access | 172.18.0.5:44630 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:53:50,618 | INFO | uvicorn.access | 172.18.0.5:44636 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:53:50,619 | INFO | uvicorn.access | 172.18.0.5:44642 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:53:50,621 | INFO | uvicorn.access | 172.18.0.5:44648 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:53:50,621 | INFO | gods_eye | executing remote: rtk cat open_ports.txt
+2026-06-16 06:53:54,129 | INFO | uvicorn.access | 172.18.0.5:44562 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:53:54,137 | INFO | uvicorn.access | 172.18.0.5:44570 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:53:58,923 | INFO | gods_eye | ping request received
+2026-06-16 06:54:01,840 | INFO | uvicorn.access | 172.18.0.5:44572 - "GET /ping HTTP/1.1" 200
+2026-06-16 06:54:27,156 | INFO | uvicorn.access | 172.18.0.5:43418 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:54:27,160 | INFO | uvicorn.access | 172.18.0.5:43424 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:54:27,161 | INFO | uvicorn.access | 172.18.0.5:43430 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:54:27,163 | INFO | uvicorn.access | 172.18.0.5:43438 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:54:27,163 | INFO | gods_eye | executing remote: rtk cat open_ports.txt
+2026-06-16 06:54:30,166 | INFO | uvicorn.access | 172.18.0.5:43442 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:54:30,177 | INFO | uvicorn.access | 172.18.0.5:43452 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:54:34,584 | INFO | gods_eye | ping request received
+2026-06-16 06:54:37,697 | INFO | uvicorn.access | 172.18.0.5:49240 - "GET /ping HTTP/1.1" 200
+2026-06-16 06:54:51,920 | INFO | uvicorn.access | 172.18.0.5:48940 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:54:51,926 | INFO | uvicorn.access | 172.18.0.5:48956 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:54:51,927 | INFO | uvicorn.access | 172.18.0.5:48960 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:54:51,932 | INFO | uvicorn.access | 172.18.0.5:48974 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:54:51,933 | INFO | gods_eye | executing remote: rtk ls -la
+2026-06-16 06:54:55,003 | INFO | uvicorn.access | 172.18.0.5:48982 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:54:55,012 | INFO | uvicorn.access | 172.18.0.5:48996 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:54:57,009 | INFO | uvicorn.access | 172.18.0.5:49012 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:54:57,013 | INFO | uvicorn.access | 172.18.0.5:49026 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:54:57,013 | INFO | uvicorn.access | 172.18.0.5:49034 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:54:57,016 | INFO | uvicorn.access | 172.18.0.5:49050 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:54:57,016 | INFO | gods_eye | executing remote: rtk file traffic.pcap
+2026-06-16 06:54:59,747 | INFO | uvicorn.access | 172.18.0.5:49064 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:54:59,755 | INFO | uvicorn.access | 172.18.0.5:49076 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:55:02,545 | INFO | uvicorn.access | 172.18.0.5:42450 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:55:02,552 | INFO | uvicorn.access | 172.18.0.5:42462 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:55:02,553 | INFO | uvicorn.access | 172.18.0.5:42466 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:55:02,556 | INFO | uvicorn.access | 172.18.0.5:42474 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:55:02,556 | INFO | gods_eye | executing remote: rtk tshark -r traffic.pcap -T fields -e ip.src -e ip.dst -e ip.protocol -e tcp.srcport -e tcp.dstport -e tcp.flags
+2026-06-16 06:55:04,967 | INFO | uvicorn.access | 172.18.0.5:42484 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:55:04,981 | INFO | uvicorn.access | 172.18.0.5:42498 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:55:06,753 | INFO | uvicorn.access | 172.18.0.5:42512 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:55:06,757 | INFO | uvicorn.access | 172.18.0.5:42524 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:55:06,758 | INFO | uvicorn.access | 172.18.0.5:42532 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:55:06,760 | INFO | uvicorn.access | 172.18.0.5:42544 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:55:06,760 | INFO | gods_eye | executing remote: rtk which tshark
+2026-06-16 06:55:09,415 | INFO | uvicorn.access | 172.18.0.5:42548 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:55:09,422 | INFO | uvicorn.access | 172.18.0.5:42560 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:55:15,114 | INFO | gods_eye | ping request received
+2026-06-16 06:55:18,262 | INFO | uvicorn.access | 172.18.0.5:57470 - "GET /ping HTTP/1.1" 200
+2026-06-16 06:55:52,836 | INFO | uvicorn.access | 172.18.0.5:59650 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:55:52,853 | INFO | uvicorn.access | 172.18.0.5:59656 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:55:52,854 | INFO | uvicorn.access | 172.18.0.5:59652 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:55:52,861 | INFO | uvicorn.access | 172.18.0.5:59670 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:55:52,862 | INFO | gods_eye | executing remote: rtk ls -la
+2026-06-16 06:55:55,684 | INFO | uvicorn.access | 172.18.0.5:59674 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:55:55,695 | INFO | uvicorn.access | 172.18.0.5:59688 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:55:57,425 | INFO | uvicorn.access | 172.18.0.5:59702 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:55:57,428 | INFO | uvicorn.access | 172.18.0.5:59716 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:55:57,428 | INFO | uvicorn.access | 172.18.0.5:59704 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:55:57,430 | INFO | uvicorn.access | 172.18.0.5:59728 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:55:57,431 | INFO | gods_eye | executing remote: rtk file traffic.pcap
+2026-06-16 06:56:00,602 | INFO | uvicorn.access | 172.18.0.5:59744 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:56:00,608 | INFO | uvicorn.access | 172.18.0.5:59748 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:56:04,188 | INFO | uvicorn.access | 172.18.0.5:55482 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:56:04,192 | INFO | uvicorn.access | 172.18.0.5:55486 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:56:04,192 | INFO | uvicorn.access | 172.18.0.5:55496 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:56:04,195 | INFO | uvicorn.access | 172.18.0.5:55512 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:56:04,195 | INFO | gods_eye | executing remote: rtk tshark -r traffic.pcap -T fields -e ip.src -e ip.dst -e ip.protocol -e tcp.flags -e tcp.seq -e tcp.ack -e tcp.window -e tcp.flags -e tcp.window -e tcp.flags -e tcp.window -e tcp.flags -e tcp.window
+2026-06-16 06:56:07,239 | INFO | uvicorn.access | 172.18.0.5:55516 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:56:07,246 | INFO | uvicorn.access | 172.18.0.5:55524 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:56:09,242 | INFO | uvicorn.access | 172.18.0.5:55540 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:56:09,248 | INFO | uvicorn.access | 172.18.0.5:55558 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:56:09,248 | INFO | uvicorn.access | 172.18.0.5:55542 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:56:09,253 | INFO | uvicorn.access | 172.18.0.5:55560 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:56:09,254 | INFO | gods_eye | executing remote: rtk which tshark
+2026-06-16 06:56:12,381 | INFO | uvicorn.access | 172.18.0.5:40978 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:56:12,389 | INFO | uvicorn.access | 172.18.0.5:40994 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:56:17,838 | INFO | gods_eye | ping request received
+2026-06-16 06:56:20,802 | INFO | uvicorn.access | 172.18.0.5:41010 - "GET /ping HTTP/1.1" 200
+2026-06-16 06:56:55,532 | INFO | uvicorn.access | 172.18.0.5:52398 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:56:55,537 | INFO | uvicorn.access | 172.18.0.5:52412 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:56:55,537 | INFO | uvicorn.access | 172.18.0.5:52420 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:56:55,540 | INFO | uvicorn.access | 172.18.0.5:52426 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:56:55,541 | INFO | gods_eye | executing remote: rtk ls -la
+2026-06-16 06:56:58,605 | INFO | uvicorn.access | 172.18.0.5:52438 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:56:58,616 | INFO | uvicorn.access | 172.18.0.5:52446 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:57:01,015 | INFO | uvicorn.access | 172.18.0.5:54268 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:57:01,019 | INFO | uvicorn.access | 172.18.0.5:54278 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:57:01,019 | INFO | uvicorn.access | 172.18.0.5:54272 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:57:01,022 | INFO | uvicorn.access | 172.18.0.5:54282 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:57:01,022 | INFO | gods_eye | executing remote: rtk file traffic.pcap
+2026-06-16 06:57:04,604 | INFO | uvicorn.access | 172.18.0.5:54298 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:57:04,614 | INFO | uvicorn.access | 172.18.0.5:54308 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:57:08,283 | INFO | uvicorn.access | 172.18.0.5:54318 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:57:08,288 | INFO | uvicorn.access | 172.18.0.5:54334 - "POST /mcp HTTP/1.1" 202
+2026-06-16 06:57:08,288 | INFO | uvicorn.access | 172.18.0.5:54346 - "GET /mcp HTTP/1.1" 200
+2026-06-16 06:57:08,291 | INFO | uvicorn.access | 172.18.0.5:54352 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:57:08,292 | INFO | gods_eye | executing remote: rtk tshark -r traffic.pcap -T fields -e ip.src -e ip.dst -e ip.protocol -e tcp.flags -e tcp.seq -e tcp.ack -e tcp.window -e tcp.flags -e tcp.window -e tcp.window -e tcp.window
+2026-06-16 06:57:11,661 | INFO | uvicorn.access | 172.18.0.5:59362 - "POST /mcp HTTP/1.1" 200
+2026-06-16 06:57:11,666 | INFO | uvicorn.access | 172.18.0.5:59374 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 06:57:15,330 | INFO | gods_eye | ping request received
+2026-06-16 06:57:18,841 | INFO | uvicorn.access | 172.18.0.5:59378 - "GET /ping HTTP/1.1" 200
+2026-06-16 06:58:56,205 | INFO | gods_eye | ping request received
+2026-06-16 06:58:59,492 | INFO | uvicorn.access | 172.18.0.5:58882 - "GET /ping HTTP/1.1" 200
+2026-06-16 07:13:14,430 | INFO | gods_eye | configuration synchronized from mcp_config.yaml
+2026-06-16 07:13:14,433 | INFO | gods_eye | initializing mcp helpers: recon and searcher
+2026-06-16 07:13:14,900 | WARNING | uvicorn.error | ASGI app factory detected. Using it, but please consider setting the --factory flag explicitly.
+2026-06-16 07:13:14,900 | INFO | uvicorn.error | Started server process [1]
+2026-06-16 07:13:14,900 | INFO | uvicorn.error | Waiting for application startup.
+2026-06-16 07:13:14,900 | INFO | uvicorn.error | Application startup complete.
+2026-06-16 07:13:14,900 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-06-16 07:14:20,844 | INFO | gods_eye | ping request received
+2026-06-16 07:14:23,787 | INFO | uvicorn.access | 172.18.0.5:35370 - "GET /ping HTTP/1.1" 200
+2026-06-16 07:16:31,115 | INFO | uvicorn.access | 172.18.0.5:40688 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:16:31,120 | INFO | uvicorn.access | 172.18.0.5:40704 - "POST /mcp HTTP/1.1" 202
+2026-06-16 07:16:31,121 | INFO | uvicorn.access | 172.18.0.5:40712 - "GET /mcp HTTP/1.1" 200
+2026-06-16 07:16:31,123 | INFO | uvicorn.access | 172.18.0.5:40722 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:16:31,127 | INFO | uvicorn.access | 172.18.0.5:40732 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 07:16:32,190 | INFO | gods_eye | ping request received
+2026-06-16 07:16:35,074 | INFO | uvicorn.access | 172.18.0.5:40740 - "GET /ping HTTP/1.1" 200
+2026-06-16 07:17:25,998 | INFO | uvicorn.access | 172.18.0.5:59238 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:17:26,048 | INFO | uvicorn.access | 172.18.0.5:59244 - "GET /mcp HTTP/1.1" 200
+2026-06-16 07:17:26,050 | INFO | uvicorn.access | 172.18.0.5:59254 - "POST /mcp HTTP/1.1" 202
+2026-06-16 07:17:26,054 | INFO | uvicorn.access | 172.18.0.5:59266 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:17:32,565 | INFO | uvicorn.access | 172.18.0.5:59276 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:17:32,590 | INFO | uvicorn.access | 172.18.0.5:59288 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 07:19:48,346 | INFO | uvicorn.access | 172.18.0.5:45826 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:19:48,353 | INFO | uvicorn.access | 172.18.0.5:45830 - "GET /mcp HTTP/1.1" 200
+2026-06-16 07:19:48,353 | INFO | uvicorn.access | 172.18.0.5:45834 - "POST /mcp HTTP/1.1" 202
+2026-06-16 07:19:48,356 | INFO | uvicorn.access | 172.18.0.5:45838 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:19:53,435 | INFO | uvicorn.access | 172.18.0.5:45850 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:19:53,438 | INFO | uvicorn.access | 172.18.0.5:45852 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 07:22:47,986 | INFO | gods_eye | ping request received
+2026-06-16 07:22:50,948 | INFO | uvicorn.access | 172.18.0.5:47930 - "GET /ping HTTP/1.1" 200
+2026-06-16 07:23:01,363 | INFO | uvicorn.access | 172.18.0.5:34646 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:23:01,369 | INFO | uvicorn.access | 172.18.0.5:34662 - "POST /mcp HTTP/1.1" 202
+2026-06-16 07:23:01,370 | INFO | uvicorn.access | 172.18.0.5:34668 - "GET /mcp HTTP/1.1" 200
+2026-06-16 07:23:01,372 | INFO | uvicorn.access | 172.18.0.5:34682 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:23:01,376 | INFO | uvicorn.access | 172.18.0.5:34688 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 07:23:02,071 | INFO | gods_eye | ping request received
+2026-06-16 07:23:04,880 | INFO | uvicorn.access | 172.18.0.5:34700 - "GET /ping HTTP/1.1" 200
+2026-06-16 07:23:07,029 | INFO | uvicorn.access | 172.18.0.5:47942 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:23:07,035 | INFO | uvicorn.access | 172.18.0.5:47956 - "GET /mcp HTTP/1.1" 200
+2026-06-16 07:23:07,036 | INFO | uvicorn.access | 172.18.0.5:47972 - "POST /mcp HTTP/1.1" 202
+2026-06-16 07:23:07,039 | INFO | uvicorn.access | 172.18.0.5:47976 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:23:26,379 | INFO | uvicorn.access | 172.18.0.5:55410 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:23:26,386 | INFO | uvicorn.access | 172.18.0.5:55420 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 07:25:18,235 | INFO | gods_eye | ping request received
+2026-06-16 07:25:21,027 | INFO | uvicorn.access | 172.18.0.5:57266 - "GET /ping HTTP/1.1" 200
+2026-06-16 07:25:32,554 | INFO | uvicorn.access | 172.18.0.5:49446 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:25:32,562 | INFO | uvicorn.access | 172.18.0.5:49462 - "GET /mcp HTTP/1.1" 200
+2026-06-16 07:25:32,562 | INFO | uvicorn.access | 172.18.0.5:49448 - "POST /mcp HTTP/1.1" 202
+2026-06-16 07:25:32,565 | INFO | uvicorn.access | 172.18.0.5:49478 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:25:32,569 | INFO | uvicorn.access | 172.18.0.5:49490 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 07:25:34,642 | INFO | uvicorn.access | 172.18.0.5:40814 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:25:34,646 | INFO | uvicorn.access | 172.18.0.5:40820 - "POST /mcp HTTP/1.1" 202
+2026-06-16 07:25:34,647 | INFO | uvicorn.access | 172.18.0.5:40828 - "GET /mcp HTTP/1.1" 200
+2026-06-16 07:25:34,649 | INFO | uvicorn.access | 172.18.0.5:40840 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:25:34,651 | INFO | uvicorn.access | 172.18.0.5:40846 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 07:25:34,661 | INFO | uvicorn.access | 172.18.0.5:40856 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:25:34,664 | INFO | uvicorn.access | 172.18.0.5:40868 - "POST /mcp HTTP/1.1" 202
+2026-06-16 07:25:34,665 | INFO | uvicorn.access | 172.18.0.5:40872 - "GET /mcp HTTP/1.1" 200
+2026-06-16 07:25:34,667 | INFO | uvicorn.access | 172.18.0.5:40878 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:25:34,670 | INFO | gods_eye | executing remote: rtk ip link show
+2026-06-16 07:25:37,549 | INFO | uvicorn.access | 172.18.0.5:40888 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:25:37,554 | INFO | uvicorn.access | 172.18.0.5:40890 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 07:25:43,369 | INFO | gods_eye | ping request received
+2026-06-16 07:25:46,066 | INFO | uvicorn.access | 172.18.0.5:40906 - "GET /ping HTTP/1.1" 200
+2026-06-16 07:26:27,657 | INFO | uvicorn.access | 172.18.0.5:40918 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:26:27,669 | INFO | uvicorn.access | 172.18.0.5:40934 - "GET /mcp HTTP/1.1" 200
+2026-06-16 07:26:27,670 | INFO | uvicorn.access | 172.18.0.5:40930 - "POST /mcp HTTP/1.1" 202
+2026-06-16 07:26:27,675 | INFO | uvicorn.access | 172.18.0.5:40948 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:26:32,504 | INFO | gods_eye | gathered 9 unique urls for crawling.
+2026-06-16 07:27:16,769 | INFO | uvicorn.access | 172.18.0.5:57520 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:27:16,774 | INFO | uvicorn.access | 172.18.0.5:57522 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 07:38:35,662 | INFO | gods_eye | ping request received
+2026-06-16 07:38:38,563 | INFO | uvicorn.access | 172.18.0.5:60492 - "GET /ping HTTP/1.1" 200
+2026-06-16 07:38:44,089 | INFO | uvicorn.access | 172.18.0.5:54580 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:38:44,094 | INFO | uvicorn.access | 172.18.0.5:54604 - "GET /mcp HTTP/1.1" 200
+2026-06-16 07:38:44,095 | INFO | uvicorn.access | 172.18.0.5:54592 - "POST /mcp HTTP/1.1" 202
+2026-06-16 07:38:44,098 | INFO | uvicorn.access | 172.18.0.5:54610 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:38:44,106 | INFO | uvicorn.access | 172.18.0.5:54612 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 07:38:45,274 | INFO | gods_eye | ping request received
+2026-06-16 07:38:47,997 | INFO | uvicorn.access | 172.18.0.5:54622 - "GET /ping HTTP/1.1" 200
+2026-06-16 07:38:50,096 | INFO | gods_eye | ping request received
+2026-06-16 07:38:52,847 | INFO | uvicorn.access | 172.18.0.5:54630 - "GET /ping HTTP/1.1" 200
+2026-06-16 07:39:03,047 | INFO | uvicorn.access | 172.18.0.5:51876 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:39:03,052 | INFO | uvicorn.access | 172.18.0.5:51898 - "GET /mcp HTTP/1.1" 200
+2026-06-16 07:39:03,052 | INFO | uvicorn.access | 172.18.0.5:51888 - "POST /mcp HTTP/1.1" 202
+2026-06-16 07:39:03,055 | INFO | uvicorn.access | 172.18.0.5:51910 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:39:03,058 | INFO | uvicorn.access | 172.18.0.5:51918 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 07:39:05,096 | INFO | uvicorn.access | 172.18.0.5:56830 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:39:05,100 | INFO | uvicorn.access | 172.18.0.5:56842 - "POST /mcp HTTP/1.1" 202
+2026-06-16 07:39:05,100 | INFO | uvicorn.access | 172.18.0.5:56856 - "GET /mcp HTTP/1.1" 200
+2026-06-16 07:39:05,105 | INFO | uvicorn.access | 172.18.0.5:56872 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:39:05,108 | INFO | uvicorn.access | 172.18.0.5:56878 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 07:39:05,117 | INFO | uvicorn.access | 172.18.0.5:56890 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:39:05,121 | INFO | uvicorn.access | 172.18.0.5:56918 - "GET /mcp HTTP/1.1" 200
+2026-06-16 07:39:05,122 | INFO | uvicorn.access | 172.18.0.5:56902 - "POST /mcp HTTP/1.1" 202
+2026-06-16 07:39:05,128 | INFO | uvicorn.access | 172.18.0.5:56920 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:39:05,129 | INFO | gods_eye | executing remote: rtk uname -a
+2026-06-16 07:39:07,988 | INFO | uvicorn.access | 172.18.0.5:56936 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:39:08,002 | INFO | uvicorn.access | 172.18.0.5:56948 - "DELETE /mcp HTTP/1.1" 200
+2026-06-16 07:39:10,820 | INFO | gods_eye | ping request received
+2026-06-16 07:39:13,740 | INFO | uvicorn.access | 172.18.0.5:56954 - "GET /ping HTTP/1.1" 200
+2026-06-16 07:39:30,862 | INFO | gods_eye | ping request received
+2026-06-16 07:39:33,749 | INFO | uvicorn.access | 172.18.0.5:41244 - "GET /ping HTTP/1.1" 200
+2026-06-16 07:39:45,948 | INFO | uvicorn.access | 172.18.0.5:60950 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:39:45,951 | INFO | uvicorn.access | 172.18.0.5:60960 - "POST /mcp HTTP/1.1" 202
+2026-06-16 07:39:45,951 | INFO | uvicorn.access | 172.18.0.5:60964 - "GET /mcp HTTP/1.1" 200
+2026-06-16 07:39:45,953 | INFO | uvicorn.access | 172.18.0.5:60968 - "POST /mcp HTTP/1.1" 200
+2026-06-16 07:39:45,954 | INFO | gods_eye | executing remote: rtk nmap -sn 192.168.1.0/24
+2026-06-16 07:40:04,196 | INFO | uvicorn.access | 172.18.0.5:49398 - "DELETE /mcp HTTP/1.1" 200

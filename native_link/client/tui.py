@@ -726,7 +726,7 @@ class AgentStatus(Static):
 
     async def _poll_tasks(self) -> None:
         """
-        listens for broadcasted task state updates from the supervisor.
+        listens for broadcasted task state updates from the orchestrator.
 
         returns:
             none
@@ -739,7 +739,7 @@ class AgentStatus(Static):
         }
         
         # we no longer check the state file immediately to prevent ghosting.
-        # we wait for the live broadcast from the supervisor.
+        # we wait for the live broadcast from the orchestrator.
 
         if not self.task_queue:
             return
@@ -1144,37 +1144,55 @@ class ChatPanel(Widget):
 
     def _next_session_id(self) -> str:
         """
-        generates the next available numeric session id between 1 and 10.
+        generates the next available session id between session_1 and session_10.
 
         returns:
             str: the next session id.
         """
         archive = self.reporter.memory.get_archive()
-        # find all numeric keys in archive
-        numeric_ids = {int(sid) for sid in archive.keys() if sid.isdigit()}
+        # find all session_N keys in archive
+        session_nums = []
+        for sid in archive.keys():
+            if sid.startswith("session_"):
+                try:
+                    session_nums.append(int(sid.split("_")[1]))
+                except (IndexError, ValueError):
+                    continue
         
         # try to find the first free id in 1-10
         for i in range(1, 11):
-            if i not in numeric_ids:
-                return str(i)
+            if i not in session_nums:
+                return f"session_{i}"
         
         # if all 1-10 are taken, find the oldest one (the first key in insertion-ordered dict)
         if archive:
             oldest_id = next(iter(archive))
             return str(oldest_id)
             
-        return "1"
+        return "session_1"
 
     def _get_active_sessions(self) -> list[str]:
         """
-        returns a sorted list of numeric session ids.
+        returns a sorted list of session ids.
 
         returns:
             list[str]: list of session identifiers.
         """
         archive = self.reporter.memory.get_archive()
-        numeric_ids = sorted([int(sid) for sid in archive.keys() if sid.isdigit()])
-        return [str(sid) for sid in numeric_ids]
+        session_ids = []
+        for sid in archive.keys():
+            if sid.startswith("session_"):
+                try:
+                    num = int(sid.split("_")[1])
+                    session_ids.append((num, sid))
+                except (IndexError, ValueError):
+                    session_ids.append((float('inf'), sid))
+            else:
+                session_ids.append((float('inf'), sid))
+        
+        # sort primarily by session number, then alphabetically
+        session_ids.sort()
+        return [sid for _, sid in session_ids]
 
     def compose(self) -> ComposeResult:
         """
@@ -1291,11 +1309,20 @@ class ChatPanel(Widget):
         is_assistant_group = role in ("assistant", "status")
         last_was_assistant_group = self._last_role in ("assistant", "status")
 
-        if self._last_role is not None and self._last_role != role:
-            # skip divider if switching within assistant group or from user to assistant
-            # (since we now add a divider at the end of every assistant response)
+        if self._last_role is not None:
+            # always divide if roles differ, or if it's consecutive system messages
+            should_divide = (self._last_role != role) or (role == "system")
+            
+            # exception: assistant group (assistant + status)
+            if is_assistant_group and last_was_assistant_group:
+                should_divide = False
+                
+            # exception: user to assistant (we add a divider before assistant anyway)
             is_u_to_a = (role in ("assistant", "status") and self._last_role == "user")
-            if not (is_assistant_group and last_was_assistant_group) and role != "divider" and not is_u_to_a:
+            if is_u_to_a:
+                should_divide = False
+                
+            if should_divide and role != "divider":
                 self._smart_divider()
             
         self._last_role = role
@@ -1568,7 +1595,7 @@ class ChatPanel(Widget):
             if self._welcomed:
                 self.query_one("#chat-log", ScrollableContainer).remove_children()
             self._exchange_count = 0
-            self._sys(f"Started new session: {self.session_id}")
+            self._sys(f"started new session: {self.session_id}")
 
         elif cmd == "/clear":
             # purge current session only
@@ -1580,7 +1607,7 @@ class ChatPanel(Widget):
             self.app.query_one(LeftPanel).action_clear_terminal()
             
             self.message_count = 0
-            self._sys(f"Session '{self.session_id}' state purged. Memory and history cleared for this session.")
+            self._sys(f"session '{self.session_id}' state purged. memory and history cleared for this session.")
 
         elif cmd == "/purge":
             # global purge
@@ -1589,7 +1616,7 @@ class ChatPanel(Widget):
             if self._welcomed:
                 self.query_one("#chat-log", ScrollableContainer).remove_children()
             self._exchange_count = 0
-            self._sys("GLOBAL PURGE COMPLETE. All sessions, memory, and history have been wiped.")
+            self._sys("GLOBAL PURGE COMPLETE. all sessions, memory, and history have been wiped.")
 
         elif cmd.startswith("/session"):
             parts = cmd.split()
@@ -1598,7 +1625,7 @@ class ChatPanel(Widget):
             if len(parts) == 1:
                 # list sessions
                 if not sessions:
-                    self._sys("No active sessions found.")
+                    self._sys("no active sessions found.")
                 else:
                     lines = []
                     for s in sessions:
@@ -1608,19 +1635,18 @@ class ChatPanel(Widget):
                         else:
                             lines.append(f"   • {s}")
                     
-                    self._sys("Available sessions:\n" + "\n".join(lines))
-                    self._sys("\nType '/session <id>' to switch.")
+                    self._sys("available sessions:\n" + "\n".join(lines) + "\n\nType '/session <id>' to switch.")
             else:
                 # switch session
                 target = parts[1]
                 
                 # verify session existence
                 if target not in sessions:
-                    self._sys(f"Session '{target}' not found.")
+                    self._sys(f"session '{target}' not found.")
                     return
 
                 if target == self.session_id:
-                    self._sys(f"Already in session '{target}'.")
+                    self._sys(f"already in session '{target}'.")
                 else:
                     self.session_id = target
                     # reload chat log from archive
@@ -1648,7 +1674,7 @@ class ChatPanel(Widget):
             self._open_config_editor()
 
         else:
-            self._sys(f"Unknown command: {raw}\nType /help for available commands.\n")
+            self._sys(f"unknown command: {raw}\nType /help for available commands.\n")
 
 
 # ------------------------------------------------------------------
@@ -1723,45 +1749,6 @@ class GodsEye(App):
             yield ChatPanel(id="right-panel")
 
     def on_mount(self) -> None:
-        """
-        focuses the chat input on startup.
-
-        returns:
-            none
-        """
-        self.query_one("#chat-input", HistoryInput).focus()
-
-    def action_quit(self) -> None:
-        """
-        exits the application.
-
-        returns:
-            none
-        """
-        self.exit()
-
-    def action_clear_chat(self) -> None:
-        """
-        triggers the /clear command.
-
-        returns:
-            none
-        """
-        self.query_one(ChatPanel)._handle_command("/clear")
-
-    def action_show_help(self) -> None:
-        """
-        triggers the /help command.
-
-        returns:
-            none
-        """
-        self.query_one(ChatPanel)._handle_command("/help")
-
-
-if __name__ == "__main__":
-    eye = GodsEye()
-    eye.run() None:
         """
         focuses the chat input on startup.
 

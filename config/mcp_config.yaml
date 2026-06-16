@@ -9,8 +9,8 @@ browser:
 
 settings:
   model: "qwen3:4b-instruct"
-  base_url: "https://c8be-2409-40f3-20c6-7535-a4c7-b20b-c258-3fc8.ngrok-free.app/v1"
-  temperature: 0.2
+  base_url: "https://nonsubtractive-raye-peptidolytic.ngrok-free.dev/v1"
+  temperature: 0.5
   api_key: "password"
 
 search:
@@ -51,74 +51,28 @@ ssh:
   user: "kali"
   key_path: "config/kali_instance.pem"
 
-
-
 terminal:
   prefix: "rtk"
 
 tools:
   web_search:
     name: "web_search"
-    description: "Search the web for information."
+    description: "Call this tool to retrieve external information from the web. Use this tool when requested data is not present in internal knowledge."
   terminal:
     name: "terminal"
     description: "Execute a shell command."
+
 # ssh -i "kali_instance.pem" admin@ec2-50-19-76-184.compute-1.amazonaws.com 
+
 condense:
   system: |
-    You are a precise Web Search Agent. Your sole task is to synthesize raw search results into a direct, objective answer matching the user's intent.
-
-    Constraints:
-    1. Rely ONLY on the provided search results. If the data is missing, insufficient, or contradictory, state that explicitly.
-    2. Never hallucinate, assume, or extrapolate facts outside the provided text.
-    3. Prioritize technical accuracy and strict scannability. Cut all conversational filler and introductory remarks.
-
+    ROLE: Data Aggregator.
+    TASK: Summarize the provided search outputs.
   basic: |
-    You are an elite research assistant and expert synthesizer of information. Your task is to analyze raw web search results and provide a comprehensive, objective, and highly scannable summary that directly answers the user's implicit or explicit intent.
-
-    User Target Objective:
-    <user_query>
-    {query}
-    </user_query>
-
-    Here are the raw web search results:
-    <search_results>
-    {context}
-    </search_results>
-
-    Please follow these strict execution guidelines:
-
-    1. **Analyze & Filter:** Evaluate the sources for relevance, credibility, and recency. Discard redundant SEO fluff and conflicting low-quality data.
-    2. **Synthesize (Do Not Just List):** Group findings by core themes or key insights rather than summarizing source-by-source.
-    3. **Structure for Scannability:** - Start with a 2-3 sentence **Executive Summary** (the "Bottom Line Up Front").
-      - Use **bolded key terms** and organized bullet points for main findings.
-      - If applicable, use a Markdown table to compare contrasting views, timelines, or data points.
-    4. **Factuality & Guardrails:** - Base your response *only* on the provided search results. 
-      - If the search results contain gaps or contradictions, explicitly state them. 
-      - Do not assume, extrapolate, or hallucinate details not present in the text.
- 
-
+    TASK: Answer the provided query using exclusively the provided search results. Output the answer directly without conversational text.
+    QUERY: {query}
+    SEARCH RESULTS: {context}
   technical: |
-    You are a Principal Systems Engineer and Senior Security Researcher. Your task is to analyze highly technical web search results (documentation, exploit write-ups, forum threads, code repositories) and extract exact, actionable technical truth.
-
-    User Target Objective:
-    <user_query>
-    [INSERT THE ORIGINAL USER QUERY HERE]
-    </user_query>
-
-    Here are the technical search results:
-    <search_results>
-    [INSERT TECHNICAL SEARCH RESULTS HERE]
-    </search_results>
-
-    You must adhere to the following strict technical constraints:
-
-    1. **Zero-Trust & Absolute Accuracy:** In technical and security contexts, minor errors (a wrong flag, a misplaced character) cause catastrophic failures. Do not smooth over technical ambiguities. If the source material is vague, note the ambiguity explicitly.
-    2. **Technical Hierarchy:** Structure your analysis into the following distinct sections:
-      - **Technical Synopsis:** A brief, high-level overview of the mechanism, vulnerability, or architecture being researched.
-      - **Core Mechanics / Root Cause:** A deep-dive bulleted breakdown of *how* it works under the hood (e.g., specific APIs, memory registers, code paths, or network protocols involved).
-      - **Exact Code / Commands:** Isolate all code snippets, terminal commands, payloads, or configurations into precise, syntactically correct Markdown code blocks. Do not alter parameters unless labeling them as placeholders (e.g., `<target_ip>`).
-      - **Edge Cases & Risks:** Highlight potential breaking changes, environment dependencies (e.g., OS kernel versions, language versions), or operational security (OpSec) risks.
-    3. **No Fluff:** Eliminate conversational filler, introductory remarks, or generic warnings. Provide pure, dense technical utility.
-
-
+    TASK: Produce a technical summary of the provided topic using exclusively the provided search results.
+    TOPIC: {query}
+    SEARCH RESULTS: {context}

@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 850" width="100%" height="100%">
+  <defs>
+    <pattern id="blueprintGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e2e8f0" stroke-width="0.5"/>
+    </pattern>
+    
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0f172a" />
+    </marker>
+  </defs>
+
+  <rect width="100%" height="100%" fill="url(#blueprintGrid)" />
+
+  <style>
+    .box { fill: #ffffff; stroke: #0f172a; stroke-width: 2px; }
+    .tool-box { fill: #ffffff; stroke: #475569; stroke-width: 1.5px; }
+    .line { fill: none; stroke: #0f172a; stroke-width: 2px; }
+    .dashed-line { fill: none; stroke: #475569; stroke-width: 1.5px; stroke-dasharray: 4,4; }
+    .text { font-family: 'Courier New', Courier, monospace; fill: #0f172a; }
+    .title { font-family: 'Courier New', Courier, monospace; font-size: 24px; font-weight: bold; fill: #0f172a; }
+    .stage-box { fill: #f8fafc; stroke: #94a3b8; stroke-width: 2px; stroke-dasharray: 8,4; }
+    .stage-title { font-family: 'Courier New', Courier, monospace; font-size: 14px; font-weight: bold; fill: #334155; }
+    .tool-text { font-family: 'Courier New', Courier, monospace; font-size: 11px; fill: #334155; }
+    .label { font-family: 'Courier New', Courier, monospace; font-size: 11px; font-weight: bold; fill: #0f172a; }
+    .sub-label { font-family: 'Courier New', Courier, monospace; font-size: 10px; fill: #475569; }
+    .highlight { fill: #000000; font-weight: bold; }
+  </style>
+
+  <text x="800" y="50" text-anchor="middle" class="title">GOD'S EYE ARCHITECTURE </text>
+
+  <rect x="160" y="80" width="380" height="300" rx="10" class="stage-box"/>
+  <text x="180" y="105" class="stage-title">1 Initiation &amp; Triage</text>
+
+  <rect x="620" y="80" width="260" height="600" rx="10" class="stage-box"/>
+  <text x="640" y="105" class="stage-title">2 Orchestration &amp; Planning</text>
+
+  <rect x="940" y="80" width="500" height="300" rx="10" class="stage-box"/>
+  <text x="960" y="105" class="stage-title">3 Execution &amp; Reconnaissance</text>
+
+  <rect x="940" y="440" width="500" height="240" rx="10" class="stage-box"/>
+  <text x="960" y="465" class="stage-title">4 Analysis &amp; Recursive Feedback</text>
+
+  <rect x="160" y="440" width="410" height="240" rx="10" class="stage-box"/>
+  <text x="180" y="465" class="stage-title">5 Final Output &amp; Delivery</text>
+
+  <rect x="40" y="240" width="80" height="80" rx="6" class="box"/>
+  <circle cx="80" cy="270" r="14" fill="none" stroke="#0f172a" stroke-width="2"/>
+  <path d="M 55,305 C 55,285 105,285 105,305" fill="none" stroke="#0f172a" stroke-width="2"/>
+  <text x="80" y="335" text-anchor="middle" class="label">USER</text>
+
+  <rect x="220" y="240" width="150" height="80" rx="8" class="box"/>
+  <text x="295" y="275" text-anchor="middle" class="label" font-size="14">REPORTER</text>
+  <text x="295" y="295" text-anchor="middle" class="label" font-size="14">AGENT</text>
+  
+  <rect x="220" y="120" width="150" height="25" rx="4" class="tool-box"/>
+  <text x="295" y="137" text-anchor="middle" class="tool-text">SEARCH (SearXNG)</text>
+  <line x1="295" y1="240" x2="295" y2="145" class="dashed-line"/>
+
+  <rect x="220" y="160" width="150" height="25" rx="4" class="tool-box"/>
+  <text x="295" y="177" text-anchor="middle" class="tool-text">QDRANT VECTOR DB</text>
+  <line x1="295" y1="240" x2="295" y2="185" class="dashed-line"/>
+
+  <rect x="220" y="200" width="150" height="25" rx="4" class="tool-box"/>
+  <text x="295" y="217" text-anchor="middle" class="tool-text">Mem0 LONG-TERM MEMORY</text>
+  <line x1="295" y1="240" x2="295" y2="225" class="dashed-line"/>
+
+  <polygon points="490,280 520,310 490,340 460,310" class="box"/>
+  <text x="490" y="315" text-anchor="middle" class="label">Yes</text>
+
+  <rect x="660" y="240" width="180" height="120" rx="8" class="box"/>
+  <text x="750" y="270" text-anchor="middle" class="label" font-size="14">ORCHESTRATOR</text>
+  <text x="750" y="290" text-anchor="middle" class="label" font-size="14">LOOP</text>
+  <rect x="675" y="305" width="150" height="40" rx="4" class="tool-box"/>
+  <text x="750" y="322" text-anchor="middle" class="tool-text">PLANNING TOOL</text>
+  <text x="750" y="337" text-anchor="middle" class="sub-label">(Internal Loop)</text>
+
+  <rect x="1000" y="240" width="150" height="80" rx="8" class="box"/>
+  <text x="1075" y="275" text-anchor="middle" class="label" font-size="14">RECON</text>
+  <text x="1075" y="295" text-anchor="middle" class="label" font-size="14">AGENT</text>
+
+  <rect x="1220" y="220" width="180" height="30" rx="4" class="tool-box"/>
+  <text x="1310" y="240" text-anchor="middle" class="tool-text">SEARCH (SearXNG)</text>
+  <line x1="1150" y1="280" x2="1220" y2="235" class="dashed-line"/>
+
+  <rect x="1220" y="265" width="180" height="30" rx="4" class="tool-box"/>
+  <text x="1310" y="285" text-anchor="middle" class="tool-text">REMOTE KALI SHELL</text>
+  <line x1="1150" y1="280" x2="1220" y2="280" class="dashed-line"/>
+
+  <rect x="1220" y="310" width="180" height="30" rx="4" class="tool-box"/>
+  <text x="1310" y="330" text-anchor="middle" class="tool-text">QDRANT VECTOR DB</text>
+  <line x1="1150" y1="280" x2="1220" y2="325" class="dashed-line"/>
+
+  <rect x="1000" y="520" width="150" height="110" rx="8" class="box"/>
+  <text x="1075" y="550" text-anchor="middle" class="label" font-size="14">ANALYST</text>
+  <text x="1075" y="570" text-anchor="middle" class="label" font-size="14">AGENT</text>
+  <rect x="1015" y="585" width="120" height="35" rx="4" class="tool-box"/>
+  <text x="1075" y="602" text-anchor="middle" class="sub-label">WORKFLOW EVAL</text>
+  <text x="1075" y="614" text-anchor="middle" class="sub-label">&amp; SYNTHESIS</text>
+
+  <rect x="1220" y="520" width="180" height="30" rx="4" class="tool-box"/>
+  <text x="1310" y="540" text-anchor="middle" class="tool-text">QDRANT VECTOR DB</text>
+  <line x1="1150" y1="575" x2="1220" y2="535" class="dashed-line"/>
+
+  <rect x="1220" y="570" width="180" height="30" rx="4" class="tool-box"/>
+  <text x="1310" y="590" text-anchor="middle" class="tool-text">Mem0 LONG-TERM MEMORY</text>
+  <line x1="1150" y1="575" x2="1220" y2="585" class="dashed-line"/>
+
+  <rect x="660" y="530" width="180" height="90" rx="8" class="box"/>
+  <text x="750" y="575" text-anchor="middle" class="label" font-size="14">ORCHESTRATOR</text>
+  <text x="750" y="595" text-anchor="middle" class="label" font-size="14">LOGIC</text>
+
+  <rect x="220" y="520" width="180" height="110" rx="8" class="box"/>
+  <text x="310" y="550" text-anchor="middle" class="label" font-size="14">REPORTER</text>
+  <text x="310" y="570" text-anchor="middle" class="label" font-size="14">AGENT</text>
+  <rect x="235" y="585" width="150" height="35" rx="4" class="tool-box"/>
+  <text x="310" y="602" text-anchor="middle" class="sub-label">FINAL SYNTHESIS &amp;</text>
+  <text x="310" y="614" text-anchor="middle" class="sub-label">CONTEXT INTEGRATION</text>
+
+  <line x1="120" y1="280" x2="210" y2="280" class="line" marker-end="url(#arrow)"/>
+  <text x="165" y="265" text-anchor="middle" class="label">User Goal</text>
+  <text x="165" y="278" text-anchor="middle" class="sub-label">(Objective)</text>
+
+  <line x1="370" y1="310" x2="450" y2="310" class="line" marker-end="url(#arrow)"/>
+  <text x="410" y="330" text-anchor="middle" class="sub-label">huge task assessment</text>
+
+  <line x1="520" y1="310" x2="650" y2="310" class="line" marker-end="url(#arrow)"/>
+  <text x="585" y="295" text-anchor="middle" class="label">DELEGATION TO</text>
+  <text x="585" y="308" text-anchor="middle" class="label">ORCHESTRATOR</text>
+
+  <line x1="840" y1="280" x2="990" y2="280" class="line" marker-end="url(#arrow)"/>
+  <text x="915" y="255" text-anchor="middle" class="label">TAKES OBJECTIVE</text>
+  <text x="915" y="295" text-anchor="middle" class="sub-label">TASKS GENERATION</text>
+  <text x="915" y="307" text-anchor="middle" class="sub-label">&amp; DISPATCH</text>
+
+  <line x1="1075" y1="320" x2="1075" y2="510" class="line" marker-end="url(#arrow)"/>
+  <text x="1090" y="420" class="label">EXECUTE TASKS</text>
+  <text x="1090" y="440" class="sub-label">PUSH RAW OUTPUT &amp;</text>
+  <text x="1090" y="452" class="sub-label">TECHNICAL FINDINGS</text>
+
+  <line x1="1000" y1="560" x2="850" y2="560" class="line" marker-end="url(#arrow)"/>
+  <text x="925" y="530" text-anchor="middle" class="label">FEEDBACK LOOP</text>
+  <text x="925" y="545" text-anchor="middle" class="sub-label">(COMMANDS: Replan, Edit Task,</text>
+  <text x="925" y="557" text-anchor="middle" class="sub-label">Skip Task, <tspan class="highlight">ABORT</tspan>)</text>
+
+  <line x1="840" y1="600" x2="990" y2="600" class="line" marker-end="url(#arrow)"/>
+  <text x="915" y="615" text-anchor="middle" class="label">ITERATIVE PROCESS</text>
+  <text x="915" y="627" text-anchor="middle" class="sub-label">(Continues until Goal Achieved)</text>
+
+  <line x1="750" y1="530" x2="750" y2="370" class="line" marker-end="url(#arrow)"/>
+
+  <line x1="660" y1="580" x2="410" y2="580" class="line" marker-end="url(#arrow)"/>
+  <text x="535" y="565" text-anchor="middle" class="label">SEND FINAL</text>
+  <text x="535" y="577" text-anchor="middle" class="label">CONSOLIDATED OUTPUT</text>
+
+  <path d="M 1075 630 L 1075 760 L 310 760 L 310 640" class="line" marker-end="url(#arrow)"/>
+  <text x="692" y="750" text-anchor="middle" class="label">OBJECTIVE VALIDATED</text>
+  <text x="1090" y="735" class="label">ITERATIVE PROCESS</text>
+  <text x="1090" y="750" class="sub-label">(Continues until</text>
+  <text x="1090" y="762" class="sub-label">Goal Achieved)</text>
+
+  <path d="M 220 575 L 80 575 L 80 335" class="line" marker-end="url(#arrow)"/>
+  <text x="150" y="565" text-anchor="middle" class="label">PRESENT RESULT</text>
+
+</svg>
+

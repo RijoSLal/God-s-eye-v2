@@ -53,6 +53,10 @@ def setup_logging(name: str = "gods_eye"):
 
     logger.addHandler(handler)
 
+    # attach file handler to uvicorn loggers to ensure they write to the mounted volume
+    logging.getLogger("uvicorn").addHandler(file_handler)
+    logging.getLogger("uvicorn.access").addHandler(file_handler)
+
     # silence noisy libraries
     logging.getLogger("crawl4ai").setLevel(logging.WARNING)
     logging.getLogger("pyserxng").setLevel(logging.WARNING)
