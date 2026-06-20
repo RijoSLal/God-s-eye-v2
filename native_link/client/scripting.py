@@ -208,29 +208,26 @@ class Recon(Model):
         self.active_session = session_id
         if not self.script_agent:
             # ... (rest of tool setup)
-            mcp_tools = await self.mcp_client.get_tools(["web_search"])
+            mcp_tools = await self.mcp_client.get_tools(["web_search", "terminal"])
+            mcp_terminal = next((t for t in mcp_tools if t.name == "terminal"), None)
+            web_search_tool = next((t for t in mcp_tools if t.name == "web_search"), None)
             
-            for tool in mcp_tools:
-                if tool.name == "web_search":
-                    tool.description = (
-                        "Search the web for information. Use 'surface=True' for general factual queries, "
-                        "news, and non-technical info. Use 'surface=False' (default) ONLY for deep "
-                        "technical investigations, coding issues, or security research."
-                    )
+            if mcp_terminal:
+                self._mcp_terminal = mcp_terminal
             
             terminal_tool = StructuredTool.from_function(
                 name="terminal",
                 coroutine=self.terminal,
-                description="Execute a shell command on the remote terminal via SSH. Use this for remote file operations or system checks."
+                description=mcp_terminal.description if mcp_terminal else ""
             )
 
             memory_tool = StructuredTool.from_function(
                 name="memory_query",
                 coroutine=self.memory_query,
-                description="Search internal memory for facts and findings from previous tasks. USE THIS if you need historical context."
+                description=self.fetch_prompt("tools.memory_query.description")
             )
             
-            combined_tools = mcp_tools + [terminal_tool, memory_tool]
+            combined_tools = ([web_search_tool] if web_search_tool else []) + [terminal_tool, memory_tool]
             
             @dynamic_prompt
             def recon_prompt(request):

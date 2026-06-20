@@ -23,9 +23,9 @@ class Analyst(Model):
                 args_schema = AnalystSchema,
             ),
             StructuredTool.from_function(
-                name="memory_query",
+                name=self.fetch_prompt("analyst.tools.memory_query.name", "memory_query"),
                 coroutine=self.memory_query,
-                description="Search internal technical logs for cross-verification of current results."
+                description= self.fetch_prompt("analyst.tools.memory_query.description"),
             )
         ]
         

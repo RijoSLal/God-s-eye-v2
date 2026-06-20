@@ -1,165 +1,227 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 850" width="100%" height="100%">
   <defs>
     <pattern id="blueprintGrid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e2e8f0" stroke-width="0.5"/>
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e2a3f" stroke-width="0.6"/>
     </pattern>
-    
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0f172a" />
+    <pattern id="blueprintGridMajor" width="200" height="200" patternUnits="userSpaceOnUse">
+      <path d="M 200 0 L 0 0 0 200" fill="none" stroke="#243352" stroke-width="0.8"/>
+    </pattern>
+
+    <linearGradient id="bgFade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a1220"/>
+      <stop offset="100%" stop-color="#0d1626"/>
+    </linearGradient>
+
+    <linearGradient id="agentFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#16233d"/>
+      <stop offset="100%" stop-color="#101b30"/>
+    </linearGradient>
+
+    <linearGradient id="userFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1b2842"/>
+      <stop offset="100%" stop-color="#131f37"/>
+    </linearGradient>
+
+    <linearGradient id="decisionFill" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3fd6a0"/>
+      <stop offset="100%" stop-color="#22b388"/>
+    </linearGradient>
+
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7fb8ff" />
+    </marker>
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#f5a623" />
     </marker>
   </defs>
 
+  <rect width="100%" height="100%" fill="url(#bgFade)" />
   <rect width="100%" height="100%" fill="url(#blueprintGrid)" />
+  <rect width="100%" height="100%" fill="url(#blueprintGridMajor)" />
 
   <style>
-    .box { fill: #ffffff; stroke: #0f172a; stroke-width: 2px; }
-    .tool-box { fill: #ffffff; stroke: #475569; stroke-width: 1.5px; }
-    .line { fill: none; stroke: #0f172a; stroke-width: 2px; }
-    .dashed-line { fill: none; stroke: #475569; stroke-width: 1.5px; stroke-dasharray: 4,4; }
-    .text { font-family: 'Courier New', Courier, monospace; fill: #0f172a; }
-    .title { font-family: 'Courier New', Courier, monospace; font-size: 24px; font-weight: bold; fill: #0f172a; }
-    .stage-box { fill: #f8fafc; stroke: #94a3b8; stroke-width: 2px; stroke-dasharray: 8,4; }
-    .stage-title { font-family: 'Courier New', Courier, monospace; font-size: 14px; font-weight: bold; fill: #334155; }
-    .tool-text { font-family: 'Courier New', Courier, monospace; font-size: 11px; fill: #334155; }
-    .label { font-family: 'Courier New', Courier, monospace; font-size: 11px; font-weight: bold; fill: #0f172a; }
-    .sub-label { font-family: 'Courier New', Courier, monospace; font-size: 10px; fill: #475569; }
-    .highlight { fill: #000000; font-weight: bold; }
+    .box { fill: url(#agentFill); stroke: #4a8cff; stroke-width: 1.6px; filter: url(#softShadow); }
+    .tool-box { fill: #0f1b30; stroke: #3a5f8f; stroke-width: 1px; }
+    .line { fill: none; stroke: #7fb8ff; stroke-width: 1.8px; }
+    .line-amber { fill: none; stroke: #f5a623; stroke-width: 1.8px; }
+    .dashed-line { fill: none; stroke: #5d84b8; stroke-width: 1.2px; stroke-dasharray: 3,4; }
+    .text { font-family: 'JetBrains Mono', 'Courier New', Courier, monospace; fill: #e8f0ff; }
+    .title { font-family: 'JetBrains Mono', 'Courier New', Courier, monospace; font-size: 27px; font-weight: 700; fill: #eaf3ff; letter-spacing: 4px; }
+    .subtitle { font-family: 'JetBrains Mono', 'Courier New', Courier, monospace; font-size: 11px; fill: #5d84b8; letter-spacing: 3px; }
+    .stage-box { fill: #0c1729; stroke: #2d4a78; stroke-width: 1.4px; stroke-dasharray: 2,5; }
+    .stage-title { font-family: 'JetBrains Mono', 'Courier New', Courier, monospace; font-size: 13px; font-weight: 700; fill: #7fb8ff; letter-spacing: 1.5px; }
+    .stage-num { font-family: 'JetBrains Mono', 'Courier New', Courier, monospace; font-size: 13px; font-weight: 700; fill: #f5a623; }
+    .tool-text { font-family: 'JetBrains Mono', 'Courier New', Courier, monospace; font-size: 10.5px; fill: #a8c5e8; letter-spacing: 0.3px; }
+    .label { font-family: 'JetBrains Mono', 'Courier New', Courier, monospace; font-size: 11px; font-weight: 700; fill: #cfe2ff; }
+    .agent-label { font-family: 'JetBrains Mono', 'Courier New', Courier, monospace; font-size: 14px; font-weight: 700; fill: #eaf3ff; letter-spacing: 0.5px; }
+    .sub-label { font-family: 'JetBrains Mono', 'Courier New', Courier, monospace; font-size: 9.5px; fill: #6f93c2; }
+    .highlight { fill: #ff6b6b; font-weight: 700; }
+    .user-label { font-family: 'JetBrains Mono', 'Courier New', Courier, monospace; font-size: 11px; font-weight: 700; fill: #eaf3ff; letter-spacing: 1px; }
   </style>
 
-  <text x="800" y="50" text-anchor="middle" class="title">GOD'S EYE ARCHITECTURE </text>
+  <text x="800" y="48" text-anchor="middle" class="title">GOD'S EYE ARCHITECTURE</text>
+  <text x="800" y="68" text-anchor="middle" class="subtitle">AUTONOMOUS AGENT ORCHESTRATION &amp; RECON PIPELINE</text>
 
-  <rect x="160" y="80" width="380" height="300" rx="10" class="stage-box"/>
-  <text x="180" y="105" class="stage-title">1 Initiation &amp; Triage</text>
+  <!-- ===================== STAGE CONTAINERS ===================== -->
+  <rect x="160" y="90" width="380" height="290" rx="12" class="stage-box"/>
+  <text x="182" y="115" class="stage-num">01</text>
+  <text x="206" y="115" class="stage-title">INITIATION &amp; TRIAGE</text>
 
-  <rect x="620" y="80" width="260" height="600" rx="10" class="stage-box"/>
-  <text x="640" y="105" class="stage-title">2 Orchestration &amp; Planning</text>
+  <rect x="620" y="90" width="260" height="600" rx="12" class="stage-box"/>
+  <text x="642" y="115" class="stage-num">02</text>
+  <text x="666" y="115" class="stage-title">ORCHESTRATION &amp; PLANNING</text>
 
-  <rect x="940" y="80" width="500" height="300" rx="10" class="stage-box"/>
-  <text x="960" y="105" class="stage-title">3 Execution &amp; Reconnaissance</text>
+  <rect x="940" y="90" width="500" height="290" rx="12" class="stage-box"/>
+  <text x="962" y="115" class="stage-num">03</text>
+  <text x="986" y="115" class="stage-title">EXECUTION &amp; RECONNAISSANCE</text>
 
-  <rect x="940" y="440" width="500" height="240" rx="10" class="stage-box"/>
-  <text x="960" y="465" class="stage-title">4 Analysis &amp; Recursive Feedback</text>
+  <rect x="940" y="440" width="500" height="240" rx="12" class="stage-box"/>
+  <text x="962" y="465" class="stage-num">04</text>
+  <text x="986" y="465" class="stage-title">ANALYSIS &amp; RECURSIVE FEEDBACK</text>
 
-  <rect x="160" y="440" width="410" height="240" rx="10" class="stage-box"/>
-  <text x="180" y="465" class="stage-title">5 Final Output &amp; Delivery</text>
+  <rect x="160" y="440" width="410" height="240" rx="12" class="stage-box"/>
+  <text x="182" y="465" class="stage-num">05</text>
+  <text x="206" y="465" class="stage-title">FINAL OUTPUT &amp; DELIVERY</text>
 
-  <rect x="40" y="240" width="80" height="80" rx="6" class="box"/>
-  <circle cx="80" cy="270" r="14" fill="none" stroke="#0f172a" stroke-width="2"/>
-  <path d="M 55,305 C 55,285 105,285 105,305" fill="none" stroke="#0f172a" stroke-width="2"/>
-  <text x="80" y="335" text-anchor="middle" class="label">USER</text>
+  <!-- ===================== USER NODE ===================== -->
+  <rect x="38" y="238" width="84" height="84" rx="10" class="box" fill="url(#userFill)"/>
+  <circle cx="80" cy="269" r="13" fill="none" stroke="#9fc6ff" stroke-width="2"/>
+  <path d="M 56,303 C 56,284 104,284 104,303" fill="none" stroke="#9fc6ff" stroke-width="2"/>
+  <text x="80" y="337" text-anchor="middle" class="user-label">USER</text>
 
-  <rect x="220" y="240" width="150" height="80" rx="8" class="box"/>
-  <text x="295" y="275" text-anchor="middle" class="label" font-size="14">REPORTER</text>
-  <text x="295" y="295" text-anchor="middle" class="label" font-size="14">AGENT</text>
-  
-  <rect x="220" y="120" width="150" height="25" rx="4" class="tool-box"/>
+  <!-- ===================== REPORTER AGENT (intake) ===================== -->
+  <rect x="218" y="238" width="154" height="84" rx="10" class="box"/>
+  <text x="295" y="274" text-anchor="middle" class="agent-label">REPORTER</text>
+  <text x="295" y="294" text-anchor="middle" class="agent-label">AGENT</text>
+
+  <rect x="218" y="120" width="154" height="26" rx="5" class="tool-box"/>
   <text x="295" y="137" text-anchor="middle" class="tool-text">SEARCH (SearXNG)</text>
-  <line x1="295" y1="240" x2="295" y2="145" class="dashed-line"/>
+  <line x1="295" y1="238" x2="295" y2="146" class="dashed-line"/>
 
-  <rect x="220" y="160" width="150" height="25" rx="4" class="tool-box"/>
+  <rect x="218" y="160" width="154" height="26" rx="5" class="tool-box"/>
   <text x="295" y="177" text-anchor="middle" class="tool-text">QDRANT VECTOR DB</text>
-  <line x1="295" y1="240" x2="295" y2="185" class="dashed-line"/>
+  <line x1="295" y1="238" x2="295" y2="186" class="dashed-line"/>
 
-  <rect x="220" y="200" width="150" height="25" rx="4" class="tool-box"/>
+  <rect x="218" y="200" width="154" height="26" rx="5" class="tool-box"/>
   <text x="295" y="217" text-anchor="middle" class="tool-text">Mem0 LONG-TERM MEMORY</text>
-  <line x1="295" y1="240" x2="295" y2="225" class="dashed-line"/>
+  <line x1="295" y1="238" x2="295" y2="226" class="dashed-line"/>
 
-  <polygon points="490,280 520,310 490,340 460,310" class="box"/>
-  <text x="490" y="315" text-anchor="middle" class="label">Yes</text>
+  <!-- ===================== TRIAGE DECISION ===================== -->
+  <polygon points="490,277 522,310 490,343 458,310" fill="url(#decisionFill)" stroke="#1a8a68" stroke-width="1.6px" filter="url(#softShadow)"/>
+  <text x="490" y="315" text-anchor="middle" class="label" fill="#062018">YES</text>
 
-  <rect x="660" y="240" width="180" height="120" rx="8" class="box"/>
-  <text x="750" y="270" text-anchor="middle" class="label" font-size="14">ORCHESTRATOR</text>
-  <text x="750" y="290" text-anchor="middle" class="label" font-size="14">LOOP</text>
-  <rect x="675" y="305" width="150" height="40" rx="4" class="tool-box"/>
+  <!-- ===================== ORCHESTRATOR LOOP ===================== -->
+  <rect x="658" y="236" width="184" height="124" rx="10" class="box"/>
+  <text x="750" y="270" text-anchor="middle" class="agent-label">ORCHESTRATOR</text>
+  <text x="750" y="290" text-anchor="middle" class="agent-label">LOOP</text>
+  <rect x="673" y="304" width="154" height="42" rx="5" class="tool-box"/>
   <text x="750" y="322" text-anchor="middle" class="tool-text">PLANNING TOOL</text>
-  <text x="750" y="337" text-anchor="middle" class="sub-label">(Internal Loop)</text>
+  <text x="750" y="337" text-anchor="middle" class="sub-label">(internal loop)</text>
 
-  <rect x="1000" y="240" width="150" height="80" rx="8" class="box"/>
-  <text x="1075" y="275" text-anchor="middle" class="label" font-size="14">RECON</text>
-  <text x="1075" y="295" text-anchor="middle" class="label" font-size="14">AGENT</text>
+  <!-- ===================== RECON AGENT ===================== -->
+  <rect x="998" y="238" width="154" height="84" rx="10" class="box"/>
+  <text x="1075" y="274" text-anchor="middle" class="agent-label">RECON</text>
+  <text x="1075" y="294" text-anchor="middle" class="agent-label">AGENT</text>
 
-  <rect x="1220" y="220" width="180" height="30" rx="4" class="tool-box"/>
-  <text x="1310" y="240" text-anchor="middle" class="tool-text">SEARCH (SearXNG)</text>
-  <line x1="1150" y1="280" x2="1220" y2="235" class="dashed-line"/>
+  <rect x="1218" y="220" width="184" height="28" rx="5" class="tool-box"/>
+  <text x="1310" y="238" text-anchor="middle" class="tool-text">SEARCH (SearXNG)</text>
+  <line x1="1152" y1="280" x2="1218" y2="234" class="dashed-line"/>
 
-  <rect x="1220" y="265" width="180" height="30" rx="4" class="tool-box"/>
-  <text x="1310" y="285" text-anchor="middle" class="tool-text">REMOTE KALI SHELL</text>
-  <line x1="1150" y1="280" x2="1220" y2="280" class="dashed-line"/>
+  <rect x="1218" y="266" width="184" height="28" rx="5" class="tool-box"/>
+  <text x="1310" y="284" text-anchor="middle" class="tool-text">REMOTE KALI SHELL</text>
+  <line x1="1152" y1="280" x2="1218" y2="280" class="dashed-line"/>
 
-  <rect x="1220" y="310" width="180" height="30" rx="4" class="tool-box"/>
+  <rect x="1218" y="312" width="184" height="28" rx="5" class="tool-box"/>
   <text x="1310" y="330" text-anchor="middle" class="tool-text">QDRANT VECTOR DB</text>
-  <line x1="1150" y1="280" x2="1220" y2="325" class="dashed-line"/>
+  <line x1="1152" y1="280" x2="1218" y2="326" class="dashed-line"/>
 
-  <rect x="1000" y="520" width="150" height="110" rx="8" class="box"/>
-  <text x="1075" y="550" text-anchor="middle" class="label" font-size="14">ANALYST</text>
-  <text x="1075" y="570" text-anchor="middle" class="label" font-size="14">AGENT</text>
-  <rect x="1015" y="585" width="120" height="35" rx="4" class="tool-box"/>
-  <text x="1075" y="602" text-anchor="middle" class="sub-label">WORKFLOW EVAL</text>
-  <text x="1075" y="614" text-anchor="middle" class="sub-label">&amp; SYNTHESIS</text>
+  <!-- ===================== ANALYST AGENT ===================== -->
+  <rect x="998" y="518" width="154" height="112" rx="10" class="box"/>
+  <text x="1075" y="550" text-anchor="middle" class="agent-label">ANALYST</text>
+  <text x="1075" y="570" text-anchor="middle" class="agent-label">AGENT</text>
+  <rect x="1013" y="584" width="124" height="38" rx="5" class="tool-box"/>
+  <text x="1075" y="600" text-anchor="middle" class="sub-label">WORKFLOW EVAL</text>
+  <text x="1075" y="613" text-anchor="middle" class="sub-label">&amp; SYNTHESIS</text>
 
-  <rect x="1220" y="520" width="180" height="30" rx="4" class="tool-box"/>
-  <text x="1310" y="540" text-anchor="middle" class="tool-text">QDRANT VECTOR DB</text>
-  <line x1="1150" y1="575" x2="1220" y2="535" class="dashed-line"/>
+  <rect x="1218" y="518" width="184" height="28" rx="5" class="tool-box"/>
+  <text x="1310" y="536" text-anchor="middle" class="tool-text">QDRANT VECTOR DB</text>
+  <line x1="1152" y1="574" x2="1218" y2="532" class="dashed-line"/>
 
-  <rect x="1220" y="570" width="180" height="30" rx="4" class="tool-box"/>
-  <text x="1310" y="590" text-anchor="middle" class="tool-text">Mem0 LONG-TERM MEMORY</text>
-  <line x1="1150" y1="575" x2="1220" y2="585" class="dashed-line"/>
+  <rect x="1218" y="568" width="184" height="28" rx="5" class="tool-box"/>
+  <text x="1310" y="586" text-anchor="middle" class="tool-text">Mem0 LONG-TERM MEMORY</text>
+  <line x1="1152" y1="574" x2="1218" y2="582" class="dashed-line"/>
 
-  <rect x="660" y="530" width="180" height="90" rx="8" class="box"/>
-  <text x="750" y="575" text-anchor="middle" class="label" font-size="14">ORCHESTRATOR</text>
-  <text x="750" y="595" text-anchor="middle" class="label" font-size="14">LOGIC</text>
+  <!-- ===================== ORCHESTRATOR LOGIC ===================== -->
+  <rect x="658" y="528" width="184" height="92" rx="10" class="box"/>
+  <text x="750" y="572" text-anchor="middle" class="agent-label">ORCHESTRATOR</text>
+  <text x="750" y="592" text-anchor="middle" class="agent-label">LOGIC</text>
 
-  <rect x="220" y="520" width="180" height="110" rx="8" class="box"/>
-  <text x="310" y="550" text-anchor="middle" class="label" font-size="14">REPORTER</text>
-  <text x="310" y="570" text-anchor="middle" class="label" font-size="14">AGENT</text>
-  <rect x="235" y="585" width="150" height="35" rx="4" class="tool-box"/>
-  <text x="310" y="602" text-anchor="middle" class="sub-label">FINAL SYNTHESIS &amp;</text>
-  <text x="310" y="614" text-anchor="middle" class="sub-label">CONTEXT INTEGRATION</text>
+  <!-- ===================== REPORTER AGENT (final synthesis) ===================== -->
+  <rect x="218" y="518" width="184" height="112" rx="10" class="box"/>
+  <text x="310" y="550" text-anchor="middle" class="agent-label">REPORTER</text>
+  <text x="310" y="570" text-anchor="middle" class="agent-label">AGENT</text>
+  <rect x="233" y="584" width="154" height="38" rx="5" class="tool-box"/>
+  <text x="310" y="600" text-anchor="middle" class="sub-label">FINAL SYNTHESIS &amp;</text>
+  <text x="310" y="613" text-anchor="middle" class="sub-label">CONTEXT INTEGRATION</text>
 
-  <line x1="120" y1="280" x2="210" y2="280" class="line" marker-end="url(#arrow)"/>
-  <text x="165" y="265" text-anchor="middle" class="label">User Goal</text>
-  <text x="165" y="278" text-anchor="middle" class="sub-label">(Objective)</text>
+  <!-- ===================== FLOW: User -> Reporter ===================== -->
+  <line x1="122" y1="280" x2="210" y2="280" class="line" marker-end="url(#arrow)"/>
+  <text x="166" y="259" text-anchor="middle" class="label">USER GOAL</text>
+  <text x="166" y="273" text-anchor="middle" class="sub-label">(objective)</text>
 
-  <line x1="370" y1="310" x2="450" y2="310" class="line" marker-end="url(#arrow)"/>
-  <text x="410" y="330" text-anchor="middle" class="sub-label">huge task assessment</text>
+  <!-- Reporter -> Decision -->
+  <line x1="372" y1="310" x2="450" y2="310" class="line" marker-end="url(#arrow)"/>
+  <text x="411" y="330" text-anchor="middle" class="sub-label">huge task assessment</text>
 
-  <line x1="520" y1="310" x2="650" y2="310" class="line" marker-end="url(#arrow)"/>
-  <text x="585" y="295" text-anchor="middle" class="label">DELEGATION TO</text>
-  <text x="585" y="308" text-anchor="middle" class="label">ORCHESTRATOR</text>
+  <!-- Decision -> Orchestrator Loop -->
+  <line x1="522" y1="310" x2="650" y2="310" class="line" marker-end="url(#arrow)"/>
+  <text x="586" y="290" text-anchor="middle" class="label">DELEGATION TO</text>
+  <text x="586" y="304" text-anchor="middle" class="label">ORCHESTRATOR</text>
 
-  <line x1="840" y1="280" x2="990" y2="280" class="line" marker-end="url(#arrow)"/>
-  <text x="915" y="255" text-anchor="middle" class="label">TAKES OBJECTIVE</text>
-  <text x="915" y="295" text-anchor="middle" class="sub-label">TASKS GENERATION</text>
-  <text x="915" y="307" text-anchor="middle" class="sub-label">&amp; DISPATCH</text>
+  <!-- Orchestrator Loop -> Recon Agent -->
+  <line x1="842" y1="280" x2="990" y2="280" class="line" marker-end="url(#arrow)"/>
+  <text x="916" y="254" text-anchor="middle" class="label">TAKES OBJECTIVE</text>
+  <text x="916" y="295" text-anchor="middle" class="sub-label">task generation</text>
+  <text x="916" y="307" text-anchor="middle" class="sub-label">&amp; dispatch</text>
 
-  <line x1="1075" y1="320" x2="1075" y2="510" class="line" marker-end="url(#arrow)"/>
-  <text x="1090" y="420" class="label">EXECUTE TASKS</text>
-  <text x="1090" y="440" class="sub-label">PUSH RAW OUTPUT &amp;</text>
-  <text x="1090" y="452" class="sub-label">TECHNICAL FINDINGS</text>
+  <!-- Recon Agent -> Analyst Agent -->
+  <line x1="1075" y1="322" x2="1075" y2="510" class="line" marker-end="url(#arrow)"/>
+  <text x="1092" y="418" class="label">EXECUTE TASKS</text>
+  <text x="1092" y="438" class="sub-label">push raw output &amp;</text>
+  <text x="1092" y="450" class="sub-label">technical findings</text>
 
-  <line x1="1000" y1="560" x2="850" y2="560" class="line" marker-end="url(#arrow)"/>
-  <text x="925" y="530" text-anchor="middle" class="label">FEEDBACK LOOP</text>
-  <text x="925" y="545" text-anchor="middle" class="sub-label">(COMMANDS: Replan, Edit Task,</text>
-  <text x="925" y="557" text-anchor="middle" class="sub-label">Skip Task, <tspan class="highlight">ABORT</tspan>)</text>
+  <!-- Analyst -> Orchestrator Logic (feedback loop, amber) -->
+  <line x1="998" y1="565" x2="850" y2="565" class="line-amber" marker-end="url(#arrowAmber)"/>
+  <text x="924" y="500" text-anchor="middle" class="label">FEEDBACK LOOP</text>
+  <text x="924" y="515" text-anchor="middle" class="sub-label">(commands: replan, edit task,</text>
+  <text x="924" y="527" text-anchor="middle" class="sub-label">skip task, <tspan class="highlight">abort</tspan>)</text>
 
-  <line x1="840" y1="600" x2="990" y2="600" class="line" marker-end="url(#arrow)"/>
-  <text x="915" y="615" text-anchor="middle" class="label">ITERATIVE PROCESS</text>
-  <text x="915" y="627" text-anchor="middle" class="sub-label">(Continues until Goal Achieved)</text>
+  <!-- Orchestrator Logic -> Recon Agent (iterative) -->
+  <line x1="842" y1="600" x2="990" y2="600" class="line" marker-end="url(#arrow)"/>
+  <text x="916" y="615" text-anchor="middle" class="label">ITERATIVE PROCESS</text>
+  <text x="916" y="627" text-anchor="middle" class="sub-label">(continues until goal achieved)</text>
 
-  <line x1="750" y1="530" x2="750" y2="370" class="line" marker-end="url(#arrow)"/>
+  <!-- Orchestrator Logic -> Orchestrator Loop (vertical link) -->
+  <line x1="750" y1="528" x2="750" y2="364" class="line" marker-end="url(#arrow)"/>
 
-  <line x1="660" y1="580" x2="410" y2="580" class="line" marker-end="url(#arrow)"/>
-  <text x="535" y="565" text-anchor="middle" class="label">SEND FINAL</text>
-  <text x="535" y="577" text-anchor="middle" class="label">CONSOLIDATED OUTPUT</text>
+  <!-- Orchestrator Logic -> Reporter Agent (final) -->
+  <line x1="658" y1="578" x2="412" y2="578" class="line" marker-end="url(#arrow)"/>
+  <text x="535" y="562" text-anchor="middle" class="label">SEND FINAL</text>
+  <text x="535" y="575" text-anchor="middle" class="label">CONSOLIDATED OUTPUT</text>
 
-  <path d="M 1075 630 L 1075 760 L 310 760 L 310 640" class="line" marker-end="url(#arrow)"/>
-  <text x="692" y="750" text-anchor="middle" class="label">OBJECTIVE VALIDATED</text>
-  <text x="1090" y="735" class="label">ITERATIVE PROCESS</text>
-  <text x="1090" y="750" class="sub-label">(Continues until</text>
-  <text x="1090" y="762" class="sub-label">Goal Achieved)</text>
+  <!-- Analyst -> Reporter (objective validated loop, amber) -->
+  <path d="M 1075 630 L 1075 758 L 310 758 L 310 634" class="line-amber" marker-end="url(#arrowAmber)"/>
+  <text x="692" y="748" text-anchor="middle" class="label">OBJECTIVE VALIDATED</text>
+  <text x="1092" y="733" class="label">ITERATIVE PROCESS</text>
+  <text x="1092" y="748" class="sub-label">(continues until</text>
+  <text x="1092" y="760" class="sub-label">goal achieved)</text>
 
-  <path d="M 220 575 L 80 575 L 80 335" class="line" marker-end="url(#arrow)"/>
-  <text x="150" y="565" text-anchor="middle" class="label">PRESENT RESULT</text>
+  <!-- Reporter (final) -> User -->
+  <path d="M 218 575 L 80 575 L 80 326" class="line" marker-end="url(#arrow)"/>
+  <text x="150" y="563" text-anchor="middle" class="label">PRESENT RESULT</text>
 
 </svg>
-

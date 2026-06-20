@@ -113,7 +113,7 @@ God-s-eye-v2/
 
 ## Warning
 
-This project will not contain the abliterated model used in the experiment mentioned in this [LinkedIn](https://www.linkedin.com/posts/rijoslal_finally-its-done-ever-since-the-release-share-7468788051062824960-dCa3/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE3PYKcB6rQ6w6PL4-4PxyDKEz9bygoMxaM) post. Instead, it uses dummy prompts, as the original prompts could produce unethical or dangerous results. You can tune your own prompts in sys_config.yaml and mcp_config.yaml
+This project will not contain the abliterated model used in the experiment mentioned in this [LinkedIn](https://www.linkedin.com/posts/rijoslal_finally-its-done-ever-since-the-release-share-7468788051062824960-dCa3/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE3PYKcB6rQ6w6PL4-4PxyDKEz9bygoMxaM) post. I have also replaced original prompts with dummy prompts, as the original prompts could produce unethical or dangerous results. You can tune your own prompts in sys_config.yaml and mcp_config.yaml
 
 ## Overview
 

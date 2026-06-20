@@ -647,25 +647,18 @@ class Reporter(Model):
         if self.agent: return
 
         mcp_tools = await self.mcp_client.get_tools(["web_search"])
-        for tool in mcp_tools:
-            if tool.name == "web_search":
-                tool.description = (
-                    "Search the web for information. Use 'surface=True' for general factual queries, "
-                    "news, and non-technical info. Use 'surface=False' ONLY for deep "
-                    "technical investigations, coding issues, or security research."
-                )
         
         self.tools = [
             StructuredTool.from_function(
                 name="orchestrator",
                 coroutine=self.orchestrator_run,
-                description="Run multi-step local system tasks, terminal commands (e.g. ls, cat, etc), or code investigations. Returns a status tree. Findings are committed to memory. USE THIS TOOL whenever you need to interact with the local file system or OS.",
+                description=self.fetch_prompt("tools.orchestrator.description"),
                 args_schema=OrchestratorRunSchema
             ),
             StructuredTool.from_function(
                 name="memory_query",
                 coroutine=self.memory_query,
-                description="Search internal memory for facts and findings from previous tasks.",
+                description=self.fetch_prompt("tools.memory_query.description"),
                 args_schema=MemoryQuerySchema
             )
         ] + mcp_tools
