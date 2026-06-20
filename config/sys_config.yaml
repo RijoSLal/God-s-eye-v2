@@ -119,9 +119,7 @@ prompts:
       - Use the provided facts and history to prevent recurring errors.
       - Alter the execution approach to circumvent the failure.
       - If the previous attempt returned an empty or error state, treat it as a final finding and do not retry the same operation.
-      - Retain alignment with the target goal.
 
-      TARGET GOAL: {goal}
       FAILED TASK: {task_id}
       TASK DESCRIPTION: {task_description}
       SUCCESS CRITERIA: {success_criteria}

@@ -232,12 +232,11 @@ class Orchestrator(Model):
             return sanitized
         return {}
 
-    async def edit_task(self, goal: str, history: str, task_id: str, task: Task, all_valid_tids: set, facts: str = "") -> Task:
+    async def edit_task(self, history: str, task_id: str, task: Task, all_valid_tids: set, facts: str = "") -> Task:
         """
         refines or revises a specific task based on context and failures.
 
         args:
-            goal (str): the user's high-level goal.
             history (str): execution log history in tree format.
             task_id (str): identifier of the task being edited.
             task (Task): the current task object.
@@ -248,7 +247,6 @@ class Orchestrator(Model):
             Task: the updated task object.
         """
         prompt = self.fetch_prompt("orchestrator.edit_task").format(
-            goal=goal,
             os_info=self.current_os,
             history=history,
             task_id=task_id,
@@ -348,13 +346,16 @@ class Orchestrator(Model):
             Dict[str, Task]: the merged task mapping.
         """
         merged = {}
-        # keep done tasks
+        # Keep old 'done' tasks ONLY if they are not redefined/replaced in the new plan
         for tid, t in old_tasks.items():
-            if t.status == "done": merged[tid] = t
-        # add new tasks
+            if t.status == "done" and tid not in new_tasks:
+                merged[tid] = t
+
+        # Add all new tasks from the replan (this overwrites any 'done' task with the same ID)
         for tid, t in new_tasks.items():
-            if tid not in merged: merged[tid] = t
-        # keep skipped tasks if not replaced
+            merged[tid] = t
+
+        # Keep old 'skipped' tasks ONLY if they are not redefined/replaced in the new plan
         for tid, t in old_tasks.items():
             if t.status == "skipped" and tid not in merged:
                 merged[tid] = t
@@ -466,13 +467,24 @@ class Orchestrator(Model):
                 task.status = "running"
                 self.save_state(state)
                 success = False
+                postponed = False
                 
                 # retry/edit loop
                 for attempt in range(self.max_edit + 1):
                     if attempt > 0:
-                        task = await self.edit_task(state.goal, self.generate_log(state), tid, task, set(state.tasks.keys()), facts=facts)
+                        task = await self.edit_task(self.generate_log(state), tid, task, set(state.tasks.keys()), facts=facts)
                         state.tasks[tid] = task
                         self.save_state(state)
+                        
+                        # Verify if the edited task introduces new unsatisfied dependencies.
+                        # If so, postpone its execution to a later loop iteration.
+                        if not self.dependencies_satisfied(task, state.tasks):
+                            task.status = "pending"
+                            state.tasks[tid] = task
+                            self.save_state(state)
+                            logger.info(f"task '{tid}' edited to add unsatisfied dependencies. postponing execution.")
+                            postponed = True
+                            break
 
                     try:
                         res = await self.dispatch(task, state, session_id=session_id)
@@ -498,6 +510,9 @@ class Orchestrator(Model):
                 if success:
                     task.status = "done"
                     progress_made = True
+                elif postponed:
+                    # Maintain its postponed 'pending' status so it can be re-run in a later iteration
+                    pass
                 else:
                     task.status = "skipped"
                 
