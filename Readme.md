@@ -4,7 +4,7 @@
 
 ![Architecture](assets/architecture.svg)
 
-![Gods_eye_v2](URL_or_Path)
+![Gods_eye_v2](assets/image.png)
 
 ## Installation
 
